@@ -19,11 +19,11 @@ def mouvement(piece, direction):             # -1 pour gauche et 1 pour droite
                 else:
                     maingrid[y][x] = maingrid[y][x+direction]
 
-                    # Petit problème à régler où la fonction renvoie vrai car elle détecte ses propres blocs
+                    
 def iscolision(piece, direction): # -1 pour la gauche et 1 pour la droite
     npiece = piece[1][1]
     for y in maingrid:
         for x in y:
-            if maingrid[y][x+direction] > 0: # Bug ici
+            if maingrid[y][x+direction] == 9:
                 return True
     return False
