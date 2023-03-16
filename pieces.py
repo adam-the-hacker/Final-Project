@@ -30,4 +30,3 @@ red=[[7,7,0],
      [0,7,7],
      [0,0,0]]
 
-bloc = random.choice([cyan, blue, orange, yellow, green, purple, red])
