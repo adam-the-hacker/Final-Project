@@ -28,9 +28,11 @@ def mouvement(piece, direction):             # -1 pour gauche et 1 pour droite
 def poser(piece):
     for i in range(len(piece)):
         for j in range(len(piece[1])):
-            maingrid[i][j + 4] = piece[i][j]  
+            maingrid[i][j + 4] = piece[i][j]
             
-            
+bloc = random.choice([cyan, blue, orange, yellow, green, purple, red])
+# Utiliser poser(bloc) pour générer un bloc aléatoire
+
 ''' Pas fini
 
 def iscolision(piece, direction): # -1 pour la gauche et 1 pour la droite
