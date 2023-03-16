@@ -1,5 +1,5 @@
 from pieces import *
-from tetris import *
+from tetris import maingrid
 
 
 def rotation(piece):
@@ -24,6 +24,13 @@ def mouvement(piece, direction):             # -1 pour gauche et 1 pour droite
                     maingrid[y][x] = maingrid[y][x+direction]
                     maingrid[y][x] = 0
 
+                  
+def poser(piece):
+    for i in range(len(piece)):
+        for j in range(len(piece[1])):
+            maingrid[i][j + 4] = piece[i][j]  
+            
+            
 ''' Pas fini
 
 def iscolision(piece, direction): # -1 pour la gauche et 1 pour la droite
