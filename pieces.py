@@ -1,18 +1,19 @@
 ### LISTE DES PIÈCES
 # https://static.wikia.nocookie.net/tetrisconcept/images/c/ca/Tetromino_image.png/revision/latest?cb=20090706171943
+# Le point central (1, 1) de chaque pièce doit obligatoirement être rempli afin de faciliter l'écriture des fonctions
 
 cyan=[[0,0,0,0],
-      [0,0,0,0],
       [1,1,1,1],
+      [0,0,0,0],
       [0,0,0,0]]
 
-blue=[[0,0,0],
-     [2,0,0],
-     [2,2,2]]
+blue=[[2,0,0],
+     [2,2,2],
+     [0,0,0]]
 
-orange=[[0,0,0],
-        [0,0,3],
-        [3,3,3]]
+orange=[[0,0,3],
+        [3,3,3],
+        [0,0,0]]
 
 yellow=[[4,4],
         [4,4]]
