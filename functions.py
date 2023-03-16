@@ -1,4 +1,5 @@
-import pieces, tetris
+from pieces import *
+from Tetris import *
 
 
 def rotation(piece):
