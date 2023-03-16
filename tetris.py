@@ -3,7 +3,8 @@ from pygame import*
 from math import*
 import time
 from random import*
-import pieces, functions
+from functions import *
+from pieces import *
 
 maingrid = [[9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9], 
             [9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9], 
