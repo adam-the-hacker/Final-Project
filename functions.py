@@ -9,18 +9,21 @@ def rotation(piece):
     return piece2
 
 
-def mouvement(piece, direction):
-    npiece =                            
-
-
-
-'''       À CONTINUER APRES LA FONCTION DU MOUVEMENT DES PIÈCES
-
-def iscolision(piece, direction): # -1 pour la gauche 
-    for y in piece:
+def mouvement(piece, direction):             # -1 pour gauche et 1 pour droite
+    npiece = piece[1][1]
+    for y in maingrid:
         for x in y:
-            if piece[y][x] > 0 and maingrid[y][x+direction] == 1:
-                return True                                         # Renvoie vrai s'il y a une colision
-            elif piece[x][y] == 0:
-                continue
-'''                     
+            if maingrid[y][x] == npiece:
+                if iscolision(piece, direction):
+                    break
+                else:
+                    maingrid[y][x] = maingrid[y][x+direction]
+
+                    
+def iscolision(piece, direction): # -1 pour la gauche 
+    npiece = piece[1][1]
+    for y in maingrid:
+        for x in y:
+            if maingrid[y][x+direction] > 0:
+                return True
+    return False
