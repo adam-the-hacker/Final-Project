@@ -4,6 +4,7 @@ from pygame import*
 from math import*
 import time
 from random import*
+import pieces, functions
 
 init()
 
