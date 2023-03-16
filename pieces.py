@@ -2,8 +2,8 @@
 # https://static.wikia.nocookie.net/tetrisconcept/images/c/ca/Tetromino_image.png/revision/latest?cb=20090706171943
 
 
-cyan=[[0,0,0,0],
-      [1,1,1,1],
+cyan=[[1,1,1,1],
+      [0,0,0,0],
       [0,0,0,0],
       [0,0,0,0]]
 
