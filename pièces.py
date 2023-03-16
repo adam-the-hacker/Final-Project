@@ -1,3 +1,8 @@
 ### LISTE DES PIÈCES
 
-cyan=
+cyan=[[]
+      []
+      []
+      [],
+     ]
+blue=[]
