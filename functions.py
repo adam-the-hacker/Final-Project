@@ -10,7 +10,10 @@ def rotation(piece):
 
 
 def mouvement(piece, direction):             # -1 pour gauche et 1 pour droite
-    npiece = piece[1][1]
+    for i in piece:
+        for j in i:
+            if piece[i][j] > 0:
+                npiece = piece[i][j]
     for y in maingrid:
         for x in y:
             if maingrid[y][x] == npiece:
@@ -18,12 +21,14 @@ def mouvement(piece, direction):             # -1 pour gauche et 1 pour droite
                     break
                 else:
                     maingrid[y][x] = maingrid[y][x+direction]
+                    maingrid[y][x] = 0
 
-                    
+''' Pas fini
+
 def iscolision(piece, direction): # -1 pour la gauche et 1 pour la droite
-    npiece = piece[1][1]
     for y in maingrid:
         for x in y:
             if maingrid[y][x+direction] == 9:
                 return True
     return False
+'''
