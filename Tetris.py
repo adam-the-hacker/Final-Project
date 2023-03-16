@@ -7,4 +7,5 @@ from random import*
 
 init()
 
-fenetre = display.set_mode((1200,800), RESIZABLE)
+''' L'interface est en 537 par 1067, mais je peux changer ''' 
+fenetre = display.set_mode((537, 1067), RESIZABLE) 
