@@ -26,11 +26,12 @@ def mouvement(piece, direction):             # -1 pour gauche et 1 pour droite
 
 
 ''' Pas fini
+# Colisions avec 8 et 9
 
 def iscolision(piece, direction): # -1 pour la gauche et 1 pour la droite
     for y in maingrid:
         for x in y:
-            if maingrid[y][x+direction] == 9:
+            if maingrid[y][x+direction] == 9 or if maingrid[y][x+direction] == 8:
                 return True
     return False
 '''
