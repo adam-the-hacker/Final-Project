@@ -24,14 +24,6 @@ def mouvement(piece, direction):             # -1 pour gauche et 1 pour droite
                     maingrid[y][x] = maingrid[y][x+direction]
                     maingrid[y][x] = 0
 
-# Testé et fonctionnel
-def poser(piece):
-    for i in range(len(piece)):
-        for j in range(len(piece[1])):
-            maingrid[i][j + 4] = piece[i][j]
-            
-bloc = random.choice([cyan, blue, orange, yellow, green, purple, red])
-# Utiliser poser(bloc) pour générer un bloc aléatoire
 
 ''' Pas fini
 
@@ -42,3 +34,36 @@ def iscolision(piece, direction): # -1 pour la gauche et 1 pour la droite
                 return True
     return False
 '''
+                    
+                    
+# Testé et fonctionnel
+def poser(piece):
+    for i in range(len(piece)):
+        for j in range(len(piece[1])):
+            maingrid[i][j + 4] = piece[i][j]
+            
+bloc = random.choice([cyan, blue, orange, yellow, green, purple, red])
+# Utiliser poser(bloc) pour générer un bloc aléatoire
+
+# Testé et fonctionnel
+def showgrid():
+  for y in range(len(maingrid)):
+    for x in range(len(maingrid[1])):
+        if maingrid[y][x] == 0:
+            fenetre.blit(blocblanc, ((x-1)*30,y*30)) # Le coef 30 existe car ce sont les dimensions d'un carré
+        if maingrid[y][x] == 1:
+            fenetre.blit(bloccyan, ((x-1)*30,y*30))
+        if maingrid[y][x] == 2:
+            fenetre.blit(blocblue, ((x-1)*30,y*30))
+        if maingrid[y][x] == 3:
+            fenetre.blit(blocorange, ((x-1)*30,y*30))
+        if maingrid[y][x] == 4:
+            fenetre.blit(blocyellow, ((x-1)*30,y*30))
+        if maingrid[y][x] == 5:
+            fenetre.blit(blocgreen, ((x-1)*30,y*30))
+        if maingrid[y][x] == 6:
+            fenetre.blit(blocpurple, ((x-1)*30,y*30))
+        if maingrid[y][x] == 7:
+            fenetre.blit(blocred, ((x-1)*30,y*30))
+
+
