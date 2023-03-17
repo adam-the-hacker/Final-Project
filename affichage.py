@@ -1,5 +1,7 @@
 import Tetris
 
+
+# Testé et fonctionnel
 def showgrid():
   for y in range(len(maingrid)):
     for x in range(len(maingrid[1])):
