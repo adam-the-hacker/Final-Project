@@ -1,6 +1,5 @@
 ### LISTE DES PIÈCES
 # https://static.wikia.nocookie.net/tetrisconcept/images/c/ca/Tetromino_image.png/revision/latest?cb=20090706171943
-import random
 
 cyan=[[1,1,1,1],
       [0,0,0,0],
