@@ -65,5 +65,6 @@ def showgrid():
             fenetre.blit(blocpurple, ((x-1)*30,y*30))
         if maingrid[y][x] == 7:
             fenetre.blit(blocred, ((x-1)*30,y*30))
-
+        if maingrid[y][x] == 8:
+            fenetre.blit(blocscore, ((x-1)*30,y*30))
 
