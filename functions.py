@@ -9,10 +9,40 @@ def rotation(piece):
             piece2[y][len(piece)-1-x] = piece[x][y]
     return piece2
 
+
+# Testé et fonctionnel
+piece_x = 0
+piece_y = 0
+
+# Testé et fonctionnel
+def poser(piece, x, y):
+    global piece_x, piece_y
+    piece_x, piece_y = x, y
+    for i in range(len(piece)):
+        for j in range(len(piece[0])):
+            maingrid[i+y][j+x+1] = piece[i][j]
+
+# Testé et fonctionnel
+def deplacer_piece(piece, x, y):
+    global piece_x, piece_y
+    npiece = 0
+    for x in range(len(piece)):
+        for y in range(len(piece)):
+            if piece[x][y] != 0:
+                npiece = piece[x][y]
+    for i in range(len(piece)):
+        for j in range(len(piece[0])):
+            if piece[i][j] == npiece:
+                maingrid[i+piece_y][j+piece_x+1] = 0
+    piece_x, piece_y = x, y
+    poser(piece, x,y)
+
+
+
 # A compléter puis tester
 def mouvement(piece, direction):             # -1 pour gauche et 1 pour droite
     for i in range(len(piece)):
-        for j in range(len(piece[1])):
+        for j in range(len(piece[0])):
             if piece[i][j] > 0:
                 npiece = piece[i][j]
     for y in range(len(maingrid)):
@@ -35,13 +65,6 @@ def iscolision(piece, direction): # -1 pour la gauche et 1 pour la droite
                 return True
     return False
 '''
-                    
-                    
-# Testé et fonctionnel
-def poser(piece):
-    for i in range(len(piece)):
-        for j in range(len(piece[1])):
-            maingrid[i][j + 5] = piece[i][j]
             
 bloc = random.choice([cyan, blue, orange, yellow, green, purple, red])
 # Utiliser poser(bloc) pour générer un bloc aléatoire
