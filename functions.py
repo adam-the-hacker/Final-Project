@@ -21,15 +21,15 @@ def poser(piece, x, y):
     for i in range(len(piece)):
         for j in range(len(piece[0])):
             maingrid[i+y][j+x+1] = piece[i][j]
-
+            
 # Testé et fonctionnel
 def deplacer_piece(piece, x, y):
     global piece_x, piece_y
     npiece = 0
-    for x in range(len(piece)):
-        for y in range(len(piece)):
-            if piece[x][y] != 0:
-                npiece = piece[x][y]
+    for z in range(len(piece)):
+        for v in range(len(piece)):
+            if piece[z][v] != 0:
+                npiece = piece[z][v]
     for i in range(len(piece)):
         for j in range(len(piece[0])):
             if piece[i][j] == npiece:
@@ -37,9 +37,16 @@ def deplacer_piece(piece, x, y):
     piece_x, piece_y = x, y
     poser(piece, x,y)
 
+# Testé et fonctionnel 
+def randombloc():
+    global activebloc
+    activebloc = bloc = choice([cyan, blue, orange, yellow, green, purple, red])
+    return bloc
+# Utiliser poser(randombloc(), x, y) pour générer un bloc aléatoire
 
 
-# A compléter puis tester
+''' Pas fini
+
 def mouvement(piece, direction):             # -1 pour gauche et 1 pour droite
     for i in range(len(piece)):
         for j in range(len(piece[0])):
@@ -55,7 +62,7 @@ def mouvement(piece, direction):             # -1 pour gauche et 1 pour droite
                     maingrid[y][x] = 0
 
 
-''' Pas fini
+
 # Colisions avec 8 et 9
 
 def iscolision(piece, direction): # -1 pour la gauche et 1 pour la droite
@@ -66,7 +73,6 @@ def iscolision(piece, direction): # -1 pour la gauche et 1 pour la droite
     return False
 '''
             
-bloc = random.choice([cyan, blue, orange, yellow, green, purple, red])
-# Utiliser poser(bloc) pour générer un bloc aléatoire
+
 
 
