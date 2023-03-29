@@ -70,7 +70,7 @@ while continuer == 1:
     if keyb[K_LEFT] and piece_x > 0:
         deplacer_piece(activebloc, piece_x - 1, piece_y)
 
-    if keyb[K_SPACE]:
+    if keyb[K_SPACE]: # Il faut coder la fonction pour faire tomber le bloc quand on appuie sur espace
         continue
 
     if comp % (vspeed) == 0:
