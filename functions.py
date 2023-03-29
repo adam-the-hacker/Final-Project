@@ -9,11 +9,6 @@ def rotation(piece):
             piece2[y][len(piece)-1-x] = piece[x][y]
     return piece2
 
-
-# Testé et fonctionnel
-piece_x = 0
-piece_y = 0
-
 # Testé et fonctionnel
 def poser(piece, x, y):
     global piece_x, piece_y
@@ -43,36 +38,4 @@ def randombloc():
     activebloc = bloc = choice([cyan, blue, orange, yellow, green, purple, red])
     return bloc
 # Utiliser poser(randombloc(), x, y) pour générer un bloc aléatoire
-
-
-''' Pas fini
-
-def mouvement(piece, direction):             # -1 pour gauche et 1 pour droite
-    for i in range(len(piece)):
-        for j in range(len(piece[0])):
-            if piece[i][j] > 0:
-                npiece = piece[i][j]
-    for y in range(len(maingrid)):
-        for x in range(len(maingrid[1])):
-            if maingrid[y][x] == npiece:
-                if iscolision(piece, direction):
-                    break
-                else:
-                    maingrid[y][x] = maingrid[y][x+direction]
-                    maingrid[y][x] = 0
-
-
-
-# Colisions avec 8 et 9
-
-def iscolision(piece, direction): # -1 pour la gauche et 1 pour la droite
-    for y in maingrid:
-        for x in y:
-            if maingrid[y][x+direction] == 9 or if maingrid[y][x+direction] == 8:
-                return True
-    return False
-'''
-            
-
-
 
