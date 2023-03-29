@@ -3,10 +3,10 @@ from tetris import maingrid
 
 # Testé et fonctionnel
 def rotation(piece):
-    piece2 = [[0 for i in range(len(piece[0]))] for j in range(len(piece))]
+    piece2 = [[0 for i in range(len(piece))] for j in range(len(piece[0]))]
     for x in range(len(piece)):
-        for y in range(len(piece)):
-            piece2[y][len(piece)-1-x] = piece[x][y]
+        for y in range(len(piece[0])):
+            piece2[y][len(piece) - 1 - x] = piece[x][y]
     return piece2
 
 # Testé et fonctionnel
@@ -22,7 +22,7 @@ def deplacer_piece(piece, x, y):
     global piece_x, piece_y
     npiece = 0
     for z in range(len(piece)):
-        for v in range(len(piece)):
+        for v in range(len(piece[0])):
             if piece[z][v] != 0:
                 npiece = piece[z][v]
     for i in range(len(piece)):
