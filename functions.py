@@ -9,6 +9,7 @@ def rotation(piece):
             piece2[y][len(piece) - 1 - x] = piece[x][y]
     return piece2
 
+
 # Testé et fonctionnel
 def poser(piece, x, y):
     global piece_x, piece_y
@@ -25,12 +26,70 @@ def deplacer_piece(piece, x, y):
         for v in range(len(piece[0])):
             if piece[z][v] != 0:
                 npiece = piece[z][v]
-    for i in range(len(piece)):
-        for j in range(len(piece[0])):
-            if piece[i][j] == npiece:
-                maingrid[i+piece_y][j+piece_x+1] = 0
-    piece_x, piece_y = x, y
-    poser(piece, x,y)
+
+    if rotated_bloc % 4 == 1:
+        for i in range(len(piece)):
+            for j in range(len(piece[0])):
+                if piece[i][j] == npiece:
+                    maingrid[i + piece_y][j + piece_x + 1] = 0
+        piece = rotation(piece)
+        for i in range(len(piece)):
+            for j in range(len(piece[0])):
+                if piece[i][j] == npiece:
+                    maingrid[i + piece_y][j + piece_x + 1] = 0
+        piece_x, piece_y = x, y
+        poser(piece, x, y)
+
+    elif rotated_bloc % 4 == 2:
+        piece = rotation(piece)
+        for i in range(len(piece)):
+            for j in range(len(piece[0])):
+                if piece[i][j] == npiece:
+                    maingrid[i + piece_y][j + piece_x + 1] = 0
+        piece = rotation(piece)
+        for i in range(len(piece)):
+            for j in range(len(piece[0])):
+                if piece[i][j] == npiece:
+                    maingrid[i + piece_y][j + piece_x + 1] = 0
+        piece_x, piece_y = x, y
+        poser(piece, x, y)
+
+    elif rotated_bloc % 4 == 3:
+        piece = rotation(rotation(piece))
+        for i in range(len(piece)):
+            for j in range(len(piece[0])):
+                if piece[i][j] == npiece:
+                    maingrid[i + piece_y][j + piece_x + 1] = 0
+        piece = rotation(piece)
+        for i in range(len(piece)):
+            for j in range(len(piece[0])):
+                if piece[i][j] == npiece:
+                    maingrid[i + piece_y][j + piece_x + 1] = 0
+        piece_x, piece_y = x, y
+        poser(piece, x, y)
+
+    elif rotated_bloc % 4 == 0:
+        piece = rotation(rotation(rotation(piece)))
+        for i in range(len(piece)):
+            for j in range(len(piece[0])):
+                if piece[i][j] == npiece:
+                    maingrid[i + piece_y][j + piece_x + 1] = 0
+        piece = rotation(piece)
+        for i in range(len(piece)):
+            for j in range(len(piece[0])):
+                if piece[i][j] == npiece:
+                    maingrid[i + piece_y][j + piece_x + 1] = 0
+        piece_x, piece_y = x, y
+        poser(piece, x, y)
+
+    else:
+        for i in range(len(piece)):
+            for j in range(len(piece[0])):
+                if piece[i][j] == npiece:
+                    maingrid[i + piece_y][j + piece_x + 1] = 0
+        piece_x, piece_y = x, y
+        poser(piece, x, y)
+
 
 # Testé et fonctionnel 
 def randombloc():
