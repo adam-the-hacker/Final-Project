@@ -75,6 +75,9 @@ while continuer == 1:
     if keyb[K_UP]:
         rotated_bloc += 1
         deplacer_piece(activebloc, piece_x, piece_y)
+    
+    if keyb[K_DOWN]:
+        deplacer_piece(activebloc, piece_x, piece_y + 1)
 
     if comp % (vspeed) == 0:
         deplacer_piece(activebloc, piece_x, piece_y + 1)
