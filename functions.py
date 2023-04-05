@@ -2,12 +2,14 @@ from pieces import *
 from tetris import maingrid
 
 # Testé et fonctionnel
-def rotation(piece):
-    piece2 = [[0 for i in range(len(piece))] for j in range(len(piece[0]))]
-    for x in range(len(piece)):
-        for y in range(len(piece[0])):
-            piece2[y][len(piece) - 1 - x] = piece[x][y]
-    return piece2
+def rotate_piece(piece, n):
+    for i in range(n % 4):
+        piece2 = [[0 for x in range(len(piece))] for y in range(len(piece[0]))]
+        for x in range(len(piece[0])):
+            for y in range(len(piece)):
+                piece2[x][y] = piece[len(piece) - y - 1][x]
+        piece = piece2
+    return piece
 
 
 # Testé et fonctionnel
@@ -20,75 +22,29 @@ def poser(piece, x, y):
             
 # Testé et fonctionnel
 def deplacer_piece(piece, x, y):
-    global piece_x, piece_y
+    global piece_x, piece_y, rotated_bloc
     npiece = 0
     for z in range(len(piece)):
         for v in range(len(piece[0])):
             if piece[z][v] != 0:
                 npiece = piece[z][v]
 
-    if rotated_bloc % 4 == 1:
-        for i in range(len(piece)):
-            for j in range(len(piece[0])):
-                if piece[i][j] == npiece:
-                    maingrid[i + piece_y][j + piece_x + 1] = 0
-        piece = rotation(piece)
-        for i in range(len(piece)):
-            for j in range(len(piece[0])):
-                if piece[i][j] == npiece:
-                    maingrid[i + piece_y][j + piece_x + 1] = 0
-        piece_x, piece_y = x, y
-        poser(piece, x, y)
+    piece = rotate_piece(piece, (rotated_bloc % 4) - 1)
 
-    elif rotated_bloc % 4 == 2:
-        piece = rotation(piece)
-        for i in range(len(piece)):
-            for j in range(len(piece[0])):
-                if piece[i][j] == npiece:
-                    maingrid[i + piece_y][j + piece_x + 1] = 0
-        piece = rotation(piece)
-        for i in range(len(piece)):
-            for j in range(len(piece[0])):
-                if piece[i][j] == npiece:
-                    maingrid[i + piece_y][j + piece_x + 1] = 0
-        piece_x, piece_y = x, y
-        poser(piece, x, y)
+    for i in range(len(piece)):
+        for j in range(len(piece[0])):
+            if piece[i][j] == npiece:
+                maingrid[i + piece_y][j + piece_x + 1] = 0
 
-    elif rotated_bloc % 4 == 3:
-        piece = rotation(rotation(piece))
-        for i in range(len(piece)):
-            for j in range(len(piece[0])):
-                if piece[i][j] == npiece:
-                    maingrid[i + piece_y][j + piece_x + 1] = 0
-        piece = rotation(piece)
-        for i in range(len(piece)):
-            for j in range(len(piece[0])):
-                if piece[i][j] == npiece:
-                    maingrid[i + piece_y][j + piece_x + 1] = 0
-        piece_x, piece_y = x, y
-        poser(piece, x, y)
+    piece = rotate_piece(piece, 1)
 
-    elif rotated_bloc % 4 == 0:
-        piece = rotation(rotation(rotation(piece)))
-        for i in range(len(piece)):
-            for j in range(len(piece[0])):
-                if piece[i][j] == npiece:
-                    maingrid[i + piece_y][j + piece_x + 1] = 0
-        piece = rotation(piece)
-        for i in range(len(piece)):
-            for j in range(len(piece[0])):
-                if piece[i][j] == npiece:
-                    maingrid[i + piece_y][j + piece_x + 1] = 0
-        piece_x, piece_y = x, y
-        poser(piece, x, y)
+    for i in range(len(piece)):
+        for j in range(len(piece[0])):
+            if piece[i][j] == npiece:
+                maingrid[i + piece_y][j + piece_x + 1] = 0
 
-    else:
-        for i in range(len(piece)):
-            for j in range(len(piece[0])):
-                if piece[i][j] == npiece:
-                    maingrid[i + piece_y][j + piece_x + 1] = 0
-        piece_x, piece_y = x, y
-        poser(piece, x, y)
+    piece_x, piece_y = x, y
+    poser(piece, x, y)
 
 
 # Testé et fonctionnel 
