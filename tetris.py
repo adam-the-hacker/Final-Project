@@ -47,14 +47,14 @@ piece_x = 0
 piece_y = 0
 comp = 0
 continuer = 1
-vspeed = 10         # Vertical speed, On le réduira pour augmenter la difficulté
+vspeed = 9          # Vertical speed, On le réduira pour augmenter la difficulté
 temps = t.time()
 rotated_bloc = 0
 
 
 
 while continuer == 1:
-    time.Clock().tick(10)
+    time.Clock().tick(9)
     for evenements in event.get():
         if evenements.type == QUIT:
             continuer = 0
