@@ -1,10 +1,10 @@
 # Main code
+import random
+import time as t
 from pygame import*
 from math import*
-import time
 from random import*
-from functions import *
-from pieces import *
+
 
 maingrid = [[9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8],
             [9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8],
@@ -25,7 +25,11 @@ maingrid = [[9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8],
             [9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8],
             [9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8],
             [9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8],
-            [9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8]]
+            [9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8],
+            [9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9],
+            [9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9],
+            [9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9]]
+
 
 init()
 blocblanc = image.load('Bloc blanc.PNG')
@@ -46,56 +50,68 @@ piece_x = 0
 piece_y = 0
 comp = 0
 continuer = 1
-vspeed = 9         # Vertical speed, On le réduira pour augmenter la difficulté
+vspeed = 10         # Vertical speed, On le réduira pour augmenter la difficulté
+level = vspeed // 10
 temps = t.time()
 rotated_bloc = 0
 piece0 = True
+activebloc = None
+score = 0
 
 
 
 while continuer == 1:
-    time.Clock().tick(9)
+    time.Clock().tick(10)
     for evenements in event.get():
         if evenements.type == QUIT:
             continuer = 0
+
     if isactivepiece == 0:
-        if piece0:
-            rotated_bloc = 0
-            poser(randombloc(), 3, -1)
-            isactivepiece = 1
-        else:
-            rotated_bloc = 0
-            poser(randombloc(), 3, 0)
-            isactivepiece = 1
+        activebloc = choice([cyan, blue, orange, yellow, green, purple, red])
+        piece_y = 0
+        piece_x = 3
+        if collision(activebloc):
+            continue # stoppe le jeu et affche le score ect...
+        isactivepiece = 1
 
     keyb = key.get_pressed()
-    if keyb[K_RIGHT] and piece_x + 1 < 11 - len(activebloc[0]):
-        deplacer_piece(activebloc, piece_x + 1, piece_y)
 
-    if keyb[K_LEFT] and piece_x > 0:
-        deplacer_piece(activebloc, piece_x - 1, piece_y)
+    if keyb[K_RIGHT]:
+        piece_x += 1
+        if collision(activebloc):
+            piece_x -=1
+
+    if keyb[K_LEFT]:
+        piece_x -= 1
+        if collision(activebloc):
+            piece_x +=1
 
     if keyb[K_SPACE]:
         continue
 
-    if keyb[K_DOWN] and piece_y < 19:
-        deplacer_piece(activebloc, piece_x, piece_y + 1)
+    if keyb[K_DOWN]:
+        piece_y += 1
+        if collision(activebloc):
+            piece_y -= 1
 
     if keyb[K_UP]:
-        rotated_bloc += 1
-        deplacer_piece(activebloc, piece_x, piece_y)
+        activebloc2 = activebloc
+        activebloc2 = rotate_piece(activebloc2, 1)
+        if collision(activebloc2):
+            continue
+        else:
+            activebloc = rotate_piece(activebloc, 1)
 
-    if comp % (vspeed) == 0 and piece_y < 18:
-        deplacer_piece(activebloc, piece_x, piece_y + 1)
-        #print(t.time()-temps)
+    if comp % (vspeed) == 0:
+        piece_y += 1
+        if collision(activebloc):
+            piece_y -= 1
+            poser(activebloc, piece_x, piece_y)
+            isactivepiece = 0
 
-    if piece_y == 18:
-        hardsetbloc(activebloc)
-        isactivepiece = 0
-        piece0 = False
-
-
+    # Affichage
     showgrid()
+    affichepiece(activebloc)
+    destroyline()
     display.flip()
     comp += 1
-
