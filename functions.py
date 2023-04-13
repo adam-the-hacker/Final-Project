@@ -2,14 +2,12 @@ from pieces import *
 from tetris import maingrid
 
 # Testé et fonctionnel
-def rotate_piece(piece, n):
-    for i in range(n % 4):
-        piece2 = [[0 for x in range(len(piece))] for y in range(len(piece[0]))]
-        for x in range(len(piece[0])):
-            for y in range(len(piece)):
-                piece2[x][y] = piece[len(piece) - y - 1][x]
-        piece = piece2
-    return piece
+def rotation(piece):
+    piece2 = [[0 for i in range(len(piece[0]))] for j in range(len(piece))]
+    for x in range(len(piece)):
+        for y in range(len(piece)):
+            piece2[y][len(piece)-1-x] = piece[x][y]
+    return piece2
 
 
 # Testé et fonctionnel
