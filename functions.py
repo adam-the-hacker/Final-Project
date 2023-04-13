@@ -50,8 +50,6 @@ def destroyline():
                 maingrid[y][x] = 0
                 score += ((100 + 200*(len(completedlines)-1))*level)//10
 
-    print(len(completedlines))
-
     move_blocks_down(len(completedlines))
 
 
