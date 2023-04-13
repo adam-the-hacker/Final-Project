@@ -20,12 +20,6 @@ def poser(piece, x, y):
             if piece[i][j] != 0:
                 maingrid[i+y][j+x+1] = piece[i][j]
                 
-def affichepiece(piece):
-    global piece_x, piece_y
-    for l in range(len(piece)):
-        for c in range(len(piece)):
-            if piece[l][c] != 0:
-                fenetre.blit(lbloc[piece[l][c] - 1], ((piece_x + c) * 30, (piece_y + l) * 30))
 
 
 def collision(piece):
