@@ -1,9 +1,9 @@
 ### LISTE DES PIÈCES
 # https://static.wikia.nocookie.net/tetrisconcept/images/c/ca/Tetromino_image.png/revision/latest?cb=20090706171943
 
-cyan=[[0,0,0,0],
+cyan=[[1,1,1,1],
       [0,0,0,0],
-      [1,1,1,1],
+      [0,0,0,0],
       [0,0,0,0]]
 
 blue=[[2,0,0],
