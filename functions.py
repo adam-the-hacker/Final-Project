@@ -50,21 +50,3 @@ def destroyline():
                 maingrid[y][x] = 0
                 score += ((100 + 200*(len(completedlines)-1))*level)//10
 
-    move_blocks_down(len(completedlines))
-
-
-# J'ai utilisé un peu d'aide pour déplacer la ligne détruite vers le bas
-def move_blocks_down(num_lines):
-    if num_lines == 0:
-        return None
-
-    for y in range(len(maingrid)-1, num_lines-1, -1):
-        for x in range(len(maingrid[y])):
-            if maingrid[y][x] not in [0, 8, 9]:
-                # Déplace ce bloc vers le bas de num_lines lignes
-                for i in range(num_lines):
-                    if y+i+1 >= len(maingrid) or maingrid[y+i+1][x] in [8,9]:
-                        break
-                else:
-                    maingrid[y+num_lines][x] = maingrid[y][x]
-                    maingrid[y][x] = 0
