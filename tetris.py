@@ -41,8 +41,8 @@ blocgreen = image.load('Bloc green.PNG')
 blocpurple = image.load('Bloc purple.PNG')
 blocred = image.load('Bloc red.PNG')
 blocscore = image.load('Bloc score.PNG')
-fenetre = display.set_mode((480,600), RESIZABLE)
 
+fenetre = display.set_mode((480,600), RESIZABLE)
 
 isactivepiece = 0 # Si cette variable est égale à 1, alors on appelle la fonction poser(bloc) pour générer un bloc aléatoire
                         # Si elle est égale à 0, on attend que le bloc soit posé pour la mettre à 1 et donc générer un nouveau bloc
@@ -57,6 +57,7 @@ rotated_bloc = 0
 piece0 = True
 activebloc = None
 score = 0
+totallines = 0
 
 
 
@@ -79,7 +80,7 @@ while continuer == 1:
     if keyb[K_RIGHT]:
         piece_x += 1
         if collision(activebloc):
-            piece_x -=1
+            piece_x -= 1
 
     if keyb[K_LEFT]:
         piece_x -= 1
@@ -93,14 +94,15 @@ while continuer == 1:
         piece_y += 1
         if collision(activebloc):
             piece_y -= 1
+        score += 1
 
     if keyb[K_UP]:
         activebloc2 = activebloc
-        activebloc2 = rotate_piece(activebloc2, 1)
+        activebloc2 = rotate_piece(activebloc2)
         if collision(activebloc2):
             continue
         else:
-            activebloc = rotate_piece(activebloc, 1)
+            activebloc = rotate_piece(activebloc)
 
     if comp % (vspeed) == 0:
         piece_y += 1
@@ -111,7 +113,9 @@ while continuer == 1:
 
     # Affichage
     showgrid()
+
     affichepiece(activebloc)
     destroyline()
     display.flip()
     comp += 1
+
