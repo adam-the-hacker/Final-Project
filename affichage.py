@@ -1,4 +1,3 @@
-
 # Testé et fonctionnel
 def showgrid():
   for y in range(len(maingrid)):
@@ -24,6 +23,7 @@ def showgrid():
             
             
 lbloc = [bloccyan, blocblue, blocorange, blocyellow, blocgreen, blocpurple, blocred]
+
 def affichepiece(piece):
     global piece_x, piece_y
     for l in range(len(piece)):
