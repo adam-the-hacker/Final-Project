@@ -1,13 +1,13 @@
 from pieces import *
 from tetris import maingrid
 
-def rotate_piece(piece, n):
-    for i in range(n % 4):
-        piece2 = [[0 for x in range(len(piece))] for y in range(len(piece[0]))]
-        for x in range(len(piece[0])):
-            for y in range(len(piece)):
-                piece2[x][y] = piece[len(piece) - y - 1][x]
-        piece = piece2
+def rotate_piece(piece):
+
+    piece2 = [[0 for x in range(len(piece))] for y in range(len(piece[0]))]
+    for x in range(len(piece[0])):
+        for y in range(len(piece)):
+            piece2[x][y] = piece[len(piece) - y - 1][x]
+    piece = piece2
     return piece
 
 
@@ -33,21 +33,18 @@ def collision(piece):
 
 
 def destroyline():
-    global iscompleted, completedlines, score, level
-    destructed = False
-    completedlines = []
+    global score, level, completedlines, totallines
+    completedlines = 0
+    destroyed = False
 
-    # Recherche de lignes complètes
+
     for y in range(len(maingrid)-3):
-        iscompleted = all(maingrid[y]) # Fonction très utile trouvée sur internet,
-                                        # elle permet de return True si une liste ne contient pas de 0
-        if iscompleted:
-            completedlines.append(y)
+        if all(maingrid[y]):
+            maingrid.pop(y)
+            maingrid.insert(0, [9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8])
+            completedlines += 1
+            totallines += 1
+            destroyed = True
 
-    # Destruction des lignes complètes
-    for y in completedlines:
-        for x in range(len(maingrid[0])):
-            if maingrid[y][x] not in [8, 9]:
-                destructed = True
-                maingrid[y][x] = 0
-                score += ((100 + 200*(len(completedlines)-1))*level)//10
+    if destroyed:
+        score += ((100 + 200 * (completedlines - 1)) * level)
