@@ -34,6 +34,7 @@ def collision(piece):
 
 def destroyline():
     global iscompleted, completedlines, score, level
+    destructed = False
     completedlines = []
 
     # Recherche de lignes complètes
@@ -47,6 +48,6 @@ def destroyline():
     for y in completedlines:
         for x in range(len(maingrid[0])):
             if maingrid[y][x] not in [8, 9]:
+                destructed = True
                 maingrid[y][x] = 0
                 score += ((100 + 200*(len(completedlines)-1))*level)//10
-
