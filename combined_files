@@ -201,7 +201,7 @@ while continuer == 1:
     display.flip()
     comp += 1
 
-#On met le score dans une <liste
+# On met le score dans un doc
 high_scores.write(str(score)+"\n")
 high_scores.close()
 # Syntaxes :
