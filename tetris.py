@@ -61,6 +61,9 @@ activebloc = None
 score = 0
 high_scores=open("score.txt", "a+")
 totallines = 0
+nextblocs = []
+# Génération du premier bloc
+nextblocs.append(choice([cyan, blue, orange, yellow, green, purple, red]))
 
 """ MAIN CODE """
 
@@ -71,11 +74,16 @@ while continuer == 1:
             continuer = 0
 
     if isactivepiece == 0:
-        activebloc = choice([cyan, blue, orange, yellow, green, purple, red])
+        # Premier bloc
+        activebloc = nextblocs[0]
+        # Supprimer ce bloc de la liste
+        nextblocs.pop(0)
+        # Générer un nouveau bloc aléatoire et l'ajouter à la liste des prochains blocs à afficher à droite du jeu
+        nextblocs.append(choice([cyan, blue, orange, yellow, green, purple, red]))
         piece_y = 0
         piece_x = 3
         if collision(activebloc):
-            continue # stoppe le jeu et affche le score ect...
+            break # stoppe le jeu et affche le score ect...
         isactivepiece = 1
 
     keyb = key.get_pressed()
