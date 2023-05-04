@@ -101,8 +101,9 @@ while continuer == 1:
     if keyb[K_SPACE]:
         while not collision(activebloc):
             piece_y += 1
-        piece_y -=1
-        score+=10 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!??
+            score+=2
+        piece_y -= 1
+        score -= 1
 
     if keyb[K_DOWN]:
         piece_y += 1
