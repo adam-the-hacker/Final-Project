@@ -55,7 +55,10 @@ piece_y = 0
 comp = 0
 continuer = 1
 vspeed = 10         # Vertical speed, On le réduira pour augmenter la difficulté
+
+# il faut changer la formule du level
 level = vspeed // 10
+
 temps = t.time()
 rotated_bloc = 0
 piece0 = True
@@ -63,9 +66,7 @@ activebloc = None
 score = 0
 high_scores=open("score.txt", "a+")
 totallines = 0
-nextblocs = []
-# Génération du premier bloc
-nextblocs.append(choice([cyan, blue, orange, yellow, green, purple, red]))
+nextbloc = choice([cyan, blue, orange, yellow, green, purple, red])
 
 """ MAIN CODE """
 
@@ -75,13 +76,12 @@ while continuer == 1:
         if evenements.type == QUIT:
             continuer = 0
 
-    if isactivepiece == 0:
+        if isactivepiece == 0:
         # Premier bloc
-        activebloc = nextblocs[0]
+        activebloc = nextbloc
         # Supprimer ce bloc de la liste
-        nextblocs.pop(0)
+        nextbloc = choice([cyan, blue, orange, yellow, green, purple, red])
         # Générer un nouveau bloc aléatoire et l'ajouter à la liste des prochains blocs à afficher à droite du jeu
-        nextblocs.append(choice([cyan, blue, orange, yellow, green, purple, red]))
         piece_y = 0
         piece_x = 3
         if collision(activebloc):
@@ -136,6 +136,9 @@ while continuer == 1:
     destroyline()
             # Score
     fenetre.blit(font.render(str(score), True, (0, 0, 0)), (350, 103))
+    fenetre.blit(font.render(str(totallines), True, (0, 0, 0)), (375, 338))
+    # Changer et adapter les coordonnées
+    affichepiece2(nextbloc, 11.3, 15)
     display.flip()
     comp += 1
 
