@@ -30,3 +30,9 @@ def affichepiece(piece):
         for c in range(len(piece)):
             if piece[l][c] != 0:
                 fenetre.blit(lbloc[piece[l][c] - 1], ((piece_x + c) * 30, (piece_y + l) * 30))
+                
+def affichepiece2(piece, x, y):
+    for l in range(len(piece)):
+        for c in range(len(piece)):
+            if piece[l][c] != 0:
+                fenetre.blit(lbloc[piece[l][c] - 1], ((x + c) * 30, (y + l) * 30))
