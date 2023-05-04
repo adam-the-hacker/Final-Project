@@ -42,12 +42,14 @@ blocgreen = image.load('Bloc green.PNG')
 blocpurple = image.load('Bloc purple.PNG')
 blocred = image.load('Bloc red.PNG')
 blocscore = image.load('Bloc score.PNG')
+scoreboard = image.load('scoreboard.png')
 lbloc = [bloccyan, blocblue, blocorange, blocyellow, blocgreen, blocpurple, blocred]
 
 fenetre = display.set_mode((480,600), RESIZABLE)
 
 isactivepiece = 0 # Si cette variable est égale à 1, alors on appelle la fonction poser(bloc) pour générer un bloc aléatoire
                         # Si elle est égale à 0, on attend que le bloc soit posé pour la mettre à 1 et donc générer un nouveau bloc
+font = font.SysFont ("consolas", 24, bold=True, italic=False)
 piece_x = 0
 piece_y = 0
 comp = 0
@@ -128,9 +130,12 @@ while continuer == 1:
 
     # Affichage
     showgrid()
-
+            # Scoreboard
+    fenetre.blit(scoreboard, (300, 0))
     affichepiece(activebloc)
     destroyline()
+            # Score
+    fenetre.blit(font.render(str(score), True, (0, 0, 0)), (350, 105))
     display.flip()
     comp += 1
 
