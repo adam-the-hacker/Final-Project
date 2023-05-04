@@ -137,8 +137,7 @@ while continuer == 1:
             # Score
     fenetre.blit(font.render(str(score), True, (0, 0, 0)), (350, 103))
     fenetre.blit(font.render(str(totallines), True, (0, 0, 0)), (375, 338))
-    # Changer et adapter les coordonnées
-    affichepiece2(nextbloc, 11.3, 15)
+    affichepiece2(nextbloc, 11.5-(len(nextbloc)-3)/2, 15)
     display.flip()
     comp += 1
 
