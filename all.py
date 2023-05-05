@@ -230,9 +230,10 @@ while continuer == 1:
 
     if keyb[K_DOWN]:
         piece_y += 1
+        score += 1
         if collision(activebloc):
             piece_y -= 1
-        score += 1
+            score -= 1
 
     if keyb[K_UP]:
         activebloc2 = activebloc
