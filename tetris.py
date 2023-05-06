@@ -56,9 +56,8 @@ comp = 0
 continuer = 1
 vspeed = 10         # Vertical speed, On le réduira pour augmenter la difficulté
 
-# il faut changer la formule du level
+# changer la formule du level
 level = vspeed // 10
-
 temps = t.time()
 rotated_bloc = 0
 piece0 = True
@@ -66,17 +65,33 @@ activebloc = None
 score = 0
 high_scores=open("score.txt", "a+")
 totallines = 0
+# Génération du premier bloc
 nextbloc = choice([cyan, blue, orange, yellow, green, purple, red])
 
+continued = False
 """ MAIN CODE """
 
 while continuer == 1:
+
+    if continued:
+        showgrid()
+        fenetre.blit(scoreboard, (300, 0))
+        affichepiece(activebloc)
+        destroyline()
+        fenetre.blit(font.render(str(score), True, (0, 0, 0)), (350, 103))
+        fenetre.blit(font.render(str(totallines), True, (0, 0, 0)), (375, 338))
+        affichepiece2(nextbloc, 11.3, 15)
+        display.flip()
+        continued = False
+
+
     time.Clock().tick(10)
     for evenements in event.get():
         if evenements.type == QUIT:
             continuer = 0
 
-        if isactivepiece == 0:
+    if isactivepiece == 0:
+        time.wait(500)
         # Premier bloc
         activebloc = nextbloc
         # Supprimer ce bloc de la liste
@@ -103,9 +118,13 @@ while continuer == 1:
     if keyb[K_SPACE]:
         while not collision(activebloc):
             piece_y += 1
-            score+=2
+            score += 2
         piece_y -= 1
         score -= 1
+        poser(activebloc, piece_x, piece_y)
+        isactivepiece = 0
+        continued = True
+        continue
 
     if keyb[K_DOWN]:
         piece_y += 1
@@ -113,12 +132,16 @@ while continuer == 1:
         if collision(activebloc):
             piece_y -= 1
             score -= 1
+            poser(activebloc, piece_x, piece_y)
+            isactivepiece = 0
+            continued = True
+            continue
 
     if keyb[K_UP]:
         activebloc2 = activebloc
         activebloc2 = rotate_piece(activebloc2)
         if collision(activebloc2):
-            continue
+            pass
         else:
             activebloc = rotate_piece(activebloc)
 
@@ -128,20 +151,20 @@ while continuer == 1:
             piece_y -= 1
             poser(activebloc, piece_x, piece_y)
             isactivepiece = 0
+            continued = True
+            continue
+
 
     # Affichage
     showgrid()
-            # Scoreboard
     fenetre.blit(scoreboard, (300, 0))
     affichepiece(activebloc)
     destroyline()
-            # Score
     fenetre.blit(font.render(str(score), True, (0, 0, 0)), (350, 103))
     fenetre.blit(font.render(str(totallines), True, (0, 0, 0)), (375, 338))
-    affichepiece2(nextbloc, 11.5-(len(nextbloc)-3)/2, 15)
+    affichepiece2(nextbloc, 11.3, 15)
     display.flip()
     comp += 1
-
 # On met le score dans un doc
 high_scores.write(str(score)+"\n")
 high_scores.close()
