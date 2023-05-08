@@ -106,6 +106,7 @@ isactivepiece = 0
 piece_x = 0
 piece_y = 0
 shadow_piece_y = piece_y
+
 nextbloc = choice([cyan, blue, orange, yellow, green, purple, red])
 lbloc = [bloccyan, blocblue, blocorange, blocyellow, blocgreen, blocpurple, blocred]
 activebloc = None
@@ -381,13 +382,13 @@ while continuer == 1:
 
     ### COMMANDES CLAVIER
 
-    if keyb[K_RIGHT] and clavier_actif > 3:
+    if keyb[K_RIGHT] and clavier_actif > 4:
         clavier_actif = 0
         piece_x += 1
         if collision(activebloc):
             piece_x -= 1
 
-    if keyb[K_LEFT] and clavier_actif > 3:
+    if keyb[K_LEFT] and clavier_actif > 4:
         clavier_actif = 0
         piece_x -= 1
         if collision(activebloc):
@@ -452,6 +453,11 @@ while continuer == 1:
     fenetre.blit(font.render(str(totallines), True, (0, 0, 0)), (375, 338))
     affichepiece2(nextbloc, 11.5 - (len(nextbloc) - 3) / 2, 15)
     shadow_piece = list(activebloc)
+    shadow_piece_y = piece_y
+    if collision_shadow(shadow_piece):
+        shadow_piece_y -= 1
+
+
     while not collision_shadow(shadow_piece):
         shadow_piece_y += 1
     shadow_piece_y -= 1
