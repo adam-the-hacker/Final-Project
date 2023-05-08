@@ -6,8 +6,8 @@ from math import*
 from random import*
 
 
-cyan=[[1,1,1,1],
-      [0,0,0,0],
+cyan=[[0,0,0,0],
+    [1,1,1,1],
       [0,0,0,0],
       [0,0,0,0]]
 
@@ -270,12 +270,12 @@ totallines = 0
 # Génération du premier bloc
 nextbloc = choice([cyan, blue, orange, yellow, green, purple, red])
 continued = False
-
+clavier_actif=100
 """ MAIN CODE """
 
 while continuer == 1:
-
-    time.Clock().tick(10)
+    clavier_actif+=1
+    time.Clock().tick(100)
 
     for evenements in event.get():
         if evenements.type == QUIT:
@@ -355,17 +355,20 @@ while continuer == 1:
 
 
 
-    if keyb[K_RIGHT]:
+    if keyb[K_RIGHT] and clavier_actif>20:
+        clavier_actif=0
         piece_x += 1
         if collision(activebloc):
             piece_x -= 1
 
-    if keyb[K_LEFT]:
+    if keyb[K_LEFT] and clavier_actif>20:
+        clavier_actif=0
         piece_x -= 1
         if collision(activebloc):
             piece_x +=1
 
-    if keyb[K_SPACE]:
+    if keyb[K_SPACE] and clavier_actif>20:
+        clavier_actif = 0
         while not collision(activebloc):
             piece_y += 1
             score += 2
@@ -376,7 +379,8 @@ while continuer == 1:
         continued = True
         continue
 
-    if keyb[K_DOWN]:
+    if keyb[K_DOWN] and clavier_actif>20:
+        clavier_actif = 0
         piece_y += 1
         score += 1
         if collision(activebloc):
@@ -387,7 +391,8 @@ while continuer == 1:
             continued = True
             continue
 
-    if keyb[K_UP]:
+    if keyb[K_UP] and clavier_actif>20:
+        clavier_actif = 0
         activebloc2 = activebloc
         activebloc2 = rotate_piece(activebloc2)
         if collision(activebloc2):
@@ -395,7 +400,7 @@ while continuer == 1:
         else:
             activebloc = rotate_piece(activebloc)
 
-    if comp % (vspeed) == 0:
+    if comp % (100) == 0:
         piece_y += 1
         if collision(activebloc):
             piece_y -= 1
@@ -420,4 +425,3 @@ high_scores.write(str(score)+"\n")
 high_scores.close()
 # Syntaxes :
 # Lire le fichier: open("score.txt","r")
-# Le lire ligne par ligne: high_scores_list = high_scores.readlines.
