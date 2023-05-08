@@ -168,7 +168,7 @@ def destroyline():
     completedlines = 0
     destroyed = False
 
-    for y in range(len(maingrid)-3):
+    for y in range(len(maingrid) - 3):
         if all(maingrid[y]):
             maingrid.pop(y)
             maingrid.insert(0, [9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8])
@@ -264,22 +264,22 @@ if music:
     # Loop music
     mixer.music.play(-1)
 
-fenetre.blit(startscreen3, (0,0))
+fenetre.blit(startscreen3, (0, 0))
 fenetre.blit(scoreboard, (300, 0))
 display.flip()
 time.wait(1000)
 
-fenetre.blit(startscreen2, (0,0))
+fenetre.blit(startscreen2, (0, 0))
 fenetre.blit(scoreboard, (300, 0))
 display.flip()
 time.wait(1000)
 
-fenetre.blit(startscreen1, (0,0))
+fenetre.blit(startscreen1, (0, 0))
 fenetre.blit(scoreboard, (300, 0))
 display.flip()
 time.wait(1000)
 
-fenetre.blit(startscreen0, (0,0))
+fenetre.blit(startscreen0, (0, 0))
 fenetre.blit(scoreboard, (300, 0))
 display.flip()
 
@@ -288,7 +288,7 @@ display.flip()
 
 
 while continuer == 1:
-    clavier_actif+=1
+    clavier_actif += 1
     time.Clock().tick(100)
 
     for evenements in event.get():
@@ -318,7 +318,7 @@ while continuer == 1:
         piece_y = 0
         piece_x = 3
         if collision(activebloc):
-            break # stoppe le jeu et affche le score ect...
+            break  # stoppe le jeu et affche le score ect...
         isactivepiece = 1
 
     keyb = key.get_pressed()
@@ -381,14 +381,14 @@ while continuer == 1:
 
     ### COMMANDES CLAVIER
 
-    if keyb[K_RIGHT] and clavier_actif>3:
+    if keyb[K_RIGHT] and clavier_actif > 3:
         clavier_actif = 0
         piece_x += 1
         if collision(activebloc):
             piece_x -= 1
 
-    if keyb[K_LEFT] and clavier_actif>3:
-        clavier_actif=0
+    if keyb[K_LEFT] and clavier_actif > 3:
+        clavier_actif = 0
         piece_x -= 1
         if collision(activebloc):
             piece_x +=1
@@ -397,7 +397,7 @@ while continuer == 1:
 
     if keyb[K_SPACE]:
             if not drop:
-                drop=True
+                drop = True
                 while not collision(activebloc):
                     piece_y += 1
                     score += 2
@@ -410,7 +410,7 @@ while continuer == 1:
     else:
         drop = False
 
-    if keyb[K_DOWN] and clavier_actif>3:
+    if keyb[K_DOWN] and clavier_actif > 3:
         clavier_actif = 0
         piece_y += 1
         score += 1
@@ -424,7 +424,7 @@ while continuer == 1:
 
     ### TOURNER
 
-    if keyb[K_UP] and clavier_actif>7:
+    if keyb[K_UP] and clavier_actif > 7:
         clavier_actif = 0
         activebloc2 = activebloc
         activebloc2 = rotate_piece(activebloc2)
@@ -433,7 +433,7 @@ while continuer == 1:
         else:
             activebloc = rotate_piece(activebloc)
 
-    if comp % (65) == 0:
+    if comp % 65 == 0:
         piece_y += 1
         if collision(activebloc):
             piece_y -= 1
