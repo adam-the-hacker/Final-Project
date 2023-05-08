@@ -68,6 +68,15 @@ def collision(piece):
     return False
 
 
+def collision_shadow(piece):
+    global maingrid, piece_x, shadow_piece_y
+    for y in range(len(piece)):
+        for x in range(len(piece)):
+            if piece[y][x] != 0:
+                if maingrid[shadow_piece_y + y][piece_x + x + 1] != 0:
+                    return True
+    return False
+
 def destroyline():
     global score, level, completedlines, totallines
     completedlines = 0
@@ -423,6 +432,11 @@ while continuer == 1:
     fenetre.blit(font.render(str(score), True, (0, 0, 0)), (350, 103))
     fenetre.blit(font.render(str(totallines), True, (0, 0, 0)), (375, 338))
     affichepiece2(nextbloc, 11.5-(len(nextbloc)-3)/2, 15)
+    shadow_piece = list(activebloc)
+    while not collision_shadow(shadow_piece):
+        shadow_piece_y += 1
+    shadow_piece_y -= 1
+    affichepiece2(shadow_piece, piece_x, shadow_piece_y)
     display.flip()
     comp += 1
 # On met le score dans un doc
