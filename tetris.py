@@ -67,8 +67,8 @@ high_scores=open("score.txt", "a+")
 totallines = 0
 # Génération du premier bloc
 nextbloc = choice([cyan, blue, orange, yellow, green, purple, red])
-
 continued = False
+
 """ MAIN CODE """
 
 while continuer == 1:
@@ -162,7 +162,7 @@ while continuer == 1:
     destroyline()
     fenetre.blit(font.render(str(score), True, (0, 0, 0)), (350, 103))
     fenetre.blit(font.render(str(totallines), True, (0, 0, 0)), (375, 338))
-    affichepiece2(nextbloc, 11.3, 15)
+    affichepiece2(nextbloc, 11.5-(len(nextbloc)-3)/2, 15)
     display.flip()
     comp += 1
 # On met le score dans un doc
