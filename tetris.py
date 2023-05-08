@@ -1,126 +1,44 @@
 import random
-import time
 import time as t
 from pygame import*
 from math import*
 from random import*
 
 
-cyan=[[0,0,0,0],
-    [1,1,1,1],
-      [0,0,0,0],
-      [0,0,0,0]]
 
-blue=[[2,0,0],
-     [2,2,2],
-     [0,0,0]]
+""""""""""""""""""""""""""" PIECES """""""""""""""""""""""""""
 
-orange=[[0,0,3],
-        [3,3,3],
-        [0,0,0]]
+cyan = [[0, 0, 0, 0],
+        [1, 1, 1, 1],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]]
 
-yellow=[[4,4],
-        [4,4]]
+blue = [[2, 0, 0],
+        [2, 2, 2],
+        [0, 0, 0]]
 
-green=[[0,5,5],
-       [5,5,0],
-       [0,0,0]]
+orange = [[0, 0, 3],
+          [3, 3, 3],
+          [0, 0, 0]]
 
-purple=[[0,6,0],
-        [6,6,6],
-        [0,0,0]]
+yellow = [[4, 4],
+          [4, 4]]
 
-red=[[7,7,0],
-     [0,7,7],
-     [0,0,0]]
+green = [[0, 5, 5],
+         [5, 5, 0],
+         [0, 0, 0]]
 
+purple = [[0, 6, 0],
+          [6, 6, 6],
+          [0, 0, 0]]
 
-
-
-
-def rotate_piece(piece):
-
-    piece2 = [[0 for x in range(len(piece))] for y in range(len(piece[0]))]
-    for x in range(len(piece[0])):
-        for y in range(len(piece)):
-            piece2[x][y] = piece[len(piece) - y - 1][x]
-    piece = piece2
-    return piece
-
-
-# Testé et fonctionnel
-def poser(piece, x, y):
-    global piece_x, piece_y
-    piece_x, piece_y = x, y
-    for i in range(len(piece)):
-        for j in range(len(piece[0])):
-            if piece[i][j] != 0:
-                maingrid[i+y][j+x+1] = piece[i][j]
-
-
-def collision(piece):
-    global maingrid, piece_x, piece_y
-    for y in range(len(piece)):
-        for x in range(len(piece)):
-            if piece[y][x] != 0:
-                if maingrid[piece_y + y][piece_x + x + 1] != 0:
-                    return True
-    return False
-
-def collision_shadow(piece):
-    global maingrid, piece_x, shadow_piece_y
-    for y in range(len(piece)):
-        for x in range(len(piece)):
-            if piece[y][x] != 0:
-                if maingrid[shadow_piece_y + y][piece_x + x + 1] != 0:
-                    return True
-    return False
-
-def destroyline():
-    global score, level, completedlines, totallines
-    completedlines = 0
-    destroyed = False
-
-
-    for y in range(len(maingrid)-3):
-        if all(maingrid[y]):
-            maingrid.pop(y)
-            maingrid.insert(0, [9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8])
-            completedlines += 1
-            totallines += 1
-            destroyed = True
-
-    if destroyed:
-        score += ((100 + 200 * (completedlines - 1)) * level)
-
-# Testé et fonctionnel
-def showgrid():
-  for y in range(len(maingrid)):
-    for x in range(len(maingrid[1])):
-        if maingrid[y][x] == 0:
-            fenetre.blit(blocblanc, ((x-1)*30,y*30)) # Le coef 30 existe car ce sont les dimensions d'un carré
-        if maingrid[y][x] == 1:
-            fenetre.blit(bloccyan, ((x - 1) * 30, y * 30))
-        if maingrid[y][x] == 2:
-            fenetre.blit(blocblue, ((x - 1) * 30, y * 30))
-        if maingrid[y][x] == 3:
-            fenetre.blit(blocorange, ((x - 1) * 30, y * 30))
-        if maingrid[y][x] == 4:
-            fenetre.blit(blocyellow, ((x - 1) * 30, y * 30))
-        if maingrid[y][x] == 5:
-            fenetre.blit(blocgreen, ((x - 1) * 30, y * 30))
-        if maingrid[y][x] == 6:
-            fenetre.blit(blocpurple, ((x - 1) * 30, y * 30))
-        if maingrid[y][x] == 7:
-            fenetre.blit(blocred, ((x - 1) * 30, y * 30))
-        if maingrid[y][x] == 8:
-            fenetre.blit(blocscore, ((x-1)*30,y*30))
+red = [[7, 7, 0],
+       [0, 7, 7],
+       [0, 0, 0]]
 
 
 
-
-
-
+""""""""""""""""""""""""""" VARIABLES """""""""""""""""""""""""""
 
 maingrid = [[9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8],
             [9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8],
@@ -147,6 +65,9 @@ maingrid = [[9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8],
             [9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9]]
 
 init()
+
+### VARIABLES VISUELLES
+
 blocblanc = image.load('Bloc blanc.PNG')
 bloccyan = image.load('Bloc cyan.PNG')
 blocblue = image.load('Bloc blue.PNG')
@@ -157,10 +78,128 @@ blocpurple = image.load('Bloc purple.PNG')
 blocred = image.load('Bloc red.PNG')
 blocscore = image.load('Bloc score.PNG')
 scoreboard = image.load('scoreboard.png')
-
+homescreen = image.load('Homescreen.png')
+screenmenu = image.load('Screenmenu.png')
+screenmusic = image.load('Screenmusic.png')
+startscreen0 = image.load('0.png')
+startscreen1 = image.load('1.png')
+startscreen2 = image.load('2.png')
+startscreen3 = image.load('3.png')
+pausescreen = image.load('Pausescreen.png')
 fenetre = display.set_mode((480,600), RESIZABLE)
 
+music = True # Music is on by default
+font = font.SysFont("consolas", 30, bold=True, italic=False)
+
+
+### RELATIF À LA PARTIE
+
+continuer = 2
+continued = False
+isactivepiece = 0
+# Si cette variable est égale à 1, alors on appelle la fonction poser(bloc) pour générer un bloc aléatoire
+# Si elle est égale à 0, on attend que le bloc soit posé pour la mettre à 1 et donc générer un nouveau bloc
+
+
+### RELATIF AUX PIÈCES
+
+piece_x = 0
+piece_y = 0
+shadow_piece_y = piece_y
+nextbloc = choice([cyan, blue, orange, yellow, green, purple, red])
 lbloc = [bloccyan, blocblue, blocorange, blocyellow, blocgreen, blocpurple, blocred]
+activebloc = None
+piece0 = True
+rotated_bloc = 0
+drop = False
+
+
+### RELATIF AU FONCTIONNEMENT
+
+comp = 0
+vspeed = 10 # Vertical speed, On le réduira pour augmenter la difficulté
+level = vspeed // 10 # Changer la formule du level
+clavier_actif = 100
+temps = t.time()
+
+score = 0
+high_scores = open("score.txt", "a+")
+totallines = 0
+
+
+""""""""""""""""""""""""""" FONCTIONS """""""""""""""""""""""""""
+
+def rotate_piece(piece):
+    piece2 = [[0 for x in range(len(piece))] for y in range(len(piece[0]))]
+    for x in range(len(piece[0])):
+        for y in range(len(piece)):
+            piece2[x][y] = piece[len(piece) - y - 1][x]
+    piece = piece2
+    return piece
+
+def poser(piece, x, y):
+    global piece_x, piece_y
+    piece_x, piece_y = x, y
+    for i in range(len(piece)):
+        for j in range(len(piece[0])):
+            if piece[i][j] != 0:
+                maingrid[i+y][j+x+1] = piece[i][j]
+
+def collision(piece):
+    global maingrid, piece_x, piece_y
+    for y in range(len(piece)):
+        for x in range(len(piece)):
+            if piece[y][x] != 0:
+                if maingrid[piece_y + y][piece_x + x + 1] != 0:
+                    return True
+    return False
+
+def collision_shadow(piece):
+    global maingrid, piece_x, shadow_piece_y
+    for y in range(len(piece)):
+        for x in range(len(piece)):
+            if piece[y][x] != 0:
+                if maingrid[shadow_piece_y + y][piece_x + x + 1] != 0:
+                    return True
+    return False
+
+def destroyline():
+    global score, level, completedlines, totallines
+    completedlines = 0
+    destroyed = False
+
+    for y in range(len(maingrid)-3):
+        if all(maingrid[y]):
+            maingrid.pop(y)
+            maingrid.insert(0, [9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8])
+            completedlines += 1
+            totallines += 1
+            destroyed = True
+
+    if destroyed:
+        score += ((100 + 200 * (completedlines - 1)) * level)
+
+def showgrid():
+  for y in range(len(maingrid)):
+    for x in range(len(maingrid[1])):
+        if maingrid[y][x] == 0:
+            fenetre.blit(blocblanc, ((x-1)*30,y*30)) # Le coef 30 existe car ce sont les dimensions d'un carré
+        if maingrid[y][x] == 1:
+            fenetre.blit(bloccyan, ((x - 1) * 30, y * 30))
+        if maingrid[y][x] == 2:
+            fenetre.blit(blocblue, ((x - 1) * 30, y * 30))
+        if maingrid[y][x] == 3:
+            fenetre.blit(blocorange, ((x - 1) * 30, y * 30))
+        if maingrid[y][x] == 4:
+            fenetre.blit(blocyellow, ((x - 1) * 30, y * 30))
+        if maingrid[y][x] == 5:
+            fenetre.blit(blocgreen, ((x - 1) * 30, y * 30))
+        if maingrid[y][x] == 6:
+            fenetre.blit(blocpurple, ((x - 1) * 30, y * 30))
+        if maingrid[y][x] == 7:
+            fenetre.blit(blocred, ((x - 1) * 30, y * 30))
+        if maingrid[y][x] == 8:
+            fenetre.blit(blocscore, ((x-1)*30,y*30))
 
 def affichepiece(piece):
     global piece_x, piece_y
@@ -177,18 +216,8 @@ def affichepiece2(piece, x, y):
 
 
 
-continuer = 2
-homescreen = image.load('Homescreen.png')
-screenmenu = image.load('Screenmenu.png')
-screenmusic = image.load('Screenmusic.png')
-startscreen0 = image.load('0.png')
-startscreen1 = image.load('1.png')
-startscreen2 = image.load('2.png')
-startscreen3 = image.load('3.png')
-pausescreen = image.load('Pausescreen.png')
+""""""""""""""""""""""""""" STARTING SCREENS """""""""""""""""""""""""""
 
-# Music is on by default
-music = True
 
 while continuer == 2:
     time.Clock().tick(15)
@@ -235,7 +264,6 @@ if music:
     # Loop music
     mixer.music.play(-1)
 
-
 fenetre.blit(startscreen3, (0,0))
 fenetre.blit(scoreboard, (300, 0))
 display.flip()
@@ -256,33 +284,8 @@ fenetre.blit(scoreboard, (300, 0))
 display.flip()
 
 
+""""""""""""""""""""""""""" MAIN CODE """""""""""""""""""""""""""
 
-
-isactivepiece = 0 # Si cette variable est égale à 1, alors on appelle la fonction poser(bloc) pour générer un bloc aléatoire
-                        # Si elle est égale à 0, on attend que le bloc soit posé pour la mettre à 1 et donc générer un nouveau bloc
-font = font.SysFont("consolas", 30, bold=True, italic=False)
-piece_x = 0
-piece_y = 0
-shadow_piece_y = piece_y
-
-comp = 0
-drop=False
-vspeed = 10         # Vertical speed, On le réduira pour augmenter la difficulté
-
-# changer la formule du level
-level = vspeed // 10
-temps = t.time()
-rotated_bloc = 0
-piece0 = True
-activebloc = None
-score = 0
-high_scores=open("score.txt", "a+")
-totallines = 0
-# Génération du premier bloc
-nextbloc = choice([cyan, blue, orange, yellow, green, purple, red])
-continued = False
-clavier_actif=100
-""" MAIN CODE """
 
 while continuer == 1:
     clavier_actif+=1
@@ -303,6 +306,7 @@ while continuer == 1:
         display.flip()
         continued = False
 
+    ### GÉNÉRER LES PIECES
 
     if isactivepiece == 0:
         time.wait(500)
@@ -319,7 +323,7 @@ while continuer == 1:
 
     keyb = key.get_pressed()
 
-
+    ### PAUSE MENU
 
     if keyb[K_p] and clavier_actif > 20:
 
@@ -375,6 +379,7 @@ while continuer == 1:
             display.flip()
 
 
+    ### COMMANDES CLAVIER
 
     if keyb[K_RIGHT] and clavier_actif>3:
         clavier_actif = 0
@@ -387,6 +392,8 @@ while continuer == 1:
         piece_x -= 1
         if collision(activebloc):
             piece_x +=1
+
+    ### HARD DROP
 
     if keyb[K_SPACE]:
             if not drop:
@@ -415,6 +422,8 @@ while continuer == 1:
             continued = True
             continue
 
+    ### TOURNER
+
     if keyb[K_UP] and clavier_actif>7:
         clavier_actif = 0
         activebloc2 = activebloc
@@ -433,7 +442,8 @@ while continuer == 1:
             continued = True
             continue
 
-    # Affichage
+    ### AFFICHAGE
+
     showgrid()
     fenetre.blit(scoreboard, (300, 0))
     affichepiece(activebloc)
@@ -448,7 +458,9 @@ while continuer == 1:
     affichepiece2(shadow_piece, piece_x, shadow_piece_y)
     display.flip()
     comp += 1
-# On met le score dans un doc
+
+### SCORE
+
 high_scores.write(str(score)+"\n")
 high_scores.close()
 # Syntaxes :
