@@ -256,6 +256,7 @@ font = font.SysFont("consolas", 30, bold=True, italic=False)
 piece_x = 0
 piece_y = 0
 comp = 0
+drop=False
 vspeed = 10         # Vertical speed, On le réduira pour augmenter la difficulté
 
 # changer la formule du level
@@ -291,6 +292,7 @@ while continuer == 1:
         affichepiece2(nextbloc, 11.3, 15)
         display.flip()
         continued = False
+        
 
     if isactivepiece == 0:
         time.wait(500)
@@ -355,31 +357,34 @@ while continuer == 1:
 
 
 
-    if keyb[K_RIGHT] and clavier_actif>20:
+    if keyb[K_RIGHT] and clavier_actif>3:
         clavier_actif=0
         piece_x += 1
         if collision(activebloc):
             piece_x -= 1
 
-    if keyb[K_LEFT] and clavier_actif>20:
+    if keyb[K_LEFT] and clavier_actif>3:
         clavier_actif=0
         piece_x -= 1
         if collision(activebloc):
             piece_x +=1
 
-    if keyb[K_SPACE] and clavier_actif>20:
-        clavier_actif = 0
-        while not collision(activebloc):
-            piece_y += 1
-            score += 2
-        piece_y -= 1
-        score -= 1
-        poser(activebloc, piece_x, piece_y)
-        isactivepiece = 0
-        continued = True
-        continue
+    if keyb[K_SPACE]:
+            if not drop:
+                drop=True
+                while not collision(activebloc):
+                    piece_y += 1
+                    score += 2
+                piece_y -= 1
+                score -= 1
+                poser(activebloc, piece_x, piece_y)
+                isactivepiece = 0
+                continued = True
+                continue
+    else:
+        drop = False
 
-    if keyb[K_DOWN] and clavier_actif>20:
+    if keyb[K_DOWN] and clavier_actif>3:
         clavier_actif = 0
         piece_y += 1
         score += 1
@@ -391,7 +396,7 @@ while continuer == 1:
             continued = True
             continue
 
-    if keyb[K_UP] and clavier_actif>20:
+    if keyb[K_UP] and clavier_actif>7:
         clavier_actif = 0
         activebloc2 = activebloc
         activebloc2 = rotate_piece(activebloc2)
