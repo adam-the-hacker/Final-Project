@@ -264,6 +264,7 @@ isactivepiece = 0 # Si cette variable est égale à 1, alors on appelle la fonct
 font = font.SysFont("consolas", 30, bold=True, italic=False)
 piece_x = 0
 piece_y = 0
+shadow_piece_y = piece_y
 comp = 0
 drop=False
 vspeed = 10         # Vertical speed, On le réduira pour augmenter la difficulté
