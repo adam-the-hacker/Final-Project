@@ -123,9 +123,31 @@ level = vspeed // 10 # Changer la formule du level
 clavier_actif = 100
 temps = t.time()
 
+
+### RELATIF AU SCORE
+
 score = 0
 high_scores = open("score.txt", "a+")
+file = open("score.txt", "r")
 totallines = 0
+stringlastscores = []
+
+for x in file:
+    if x != "\n" and x != 0 and x != "0\n":
+        stringlastscores.append(x)
+
+for x in range(len(stringlastscores)):
+    stringlastscores[x] = stringlastscores[x].replace("\n", "")
+
+lastscores = sorted(stringlastscores, key=int, reverse=False)
+
+lastscore1 = font.render(lastscores[-1], True, (255, 255, 255))
+lastscore2 = font.render(lastscores[-2], True, (255, 255, 255))
+lastscore3 = font.render(lastscores[-3], True, (255, 255, 255))
+lastscore4 = font.render(lastscores[-4], True, (255, 255, 255))
+lastscore5 = font.render(lastscores[-5], True, (255, 255, 255))
+
+
 
 
 """"""""""""""""""""""""""" FONCTIONS """""""""""""""""""""""""""
@@ -257,6 +279,11 @@ while continuer == 2:
             display.flip()
 
     fenetre.blit(homescreen, (0, 0))
+    fenetre.blit(lastscore1, (240-10*len(lastscores[-1]), 370))
+    fenetre.blit(lastscore2, (240-10*len(lastscores[-2]), 400))
+    fenetre.blit(lastscore3, (240-10*len(lastscores[-3]), 430))
+    fenetre.blit(lastscore4, (240-10*len(lastscores[-4]), 460))
+    fenetre.blit(lastscore5, (240-10*len(lastscores[-5]), 490))
     display.flip()
 
 if music:
@@ -376,8 +403,15 @@ while continuer == 1:
 
                     display.flip()
 
+
             fenetre.blit(pausescreen, (0, 0))
+            fenetre.blit(lastscore1, (240 - 10 * len(lastscores[-1]), 370))
+            fenetre.blit(lastscore2, (240 - 10 * len(lastscores[-2]), 400))
+            fenetre.blit(lastscore3, (240 - 10 * len(lastscores[-3]), 430))
+            fenetre.blit(lastscore4, (240 - 10 * len(lastscores[-4]), 460))
+            fenetre.blit(lastscore5, (240 - 10 * len(lastscores[-5]), 490))
             display.flip()
+
 
 
     ### COMMANDES CLAVIER
@@ -443,21 +477,26 @@ while continuer == 1:
             continued = True
             continue
 
+
     ### AFFICHAGE
 
     showgrid()
     fenetre.blit(scoreboard, (300, 0))
     affichepiece(activebloc)
     destroyline()
+
+    # Affichage du score, lignes, ect
+
     fenetre.blit(font.render(str(score), True, (0, 0, 0)), (350, 103))
     fenetre.blit(font.render(str(totallines), True, (0, 0, 0)), (375, 338))
     affichepiece2(nextbloc, 11.5 - (len(nextbloc) - 3) / 2, 15)
+
+    # Affichage de l'ombre de la pièce
+
     shadow_piece = list(activebloc)
     shadow_piece_y = piece_y
     if collision_shadow(shadow_piece):
         shadow_piece_y -= 1
-
-
     while not collision_shadow(shadow_piece):
         shadow_piece_y += 1
     shadow_piece_y -= 1
