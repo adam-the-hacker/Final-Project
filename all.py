@@ -1,4 +1,5 @@
 import random
+import time
 import time as t
 from pygame import*
 from math import*
@@ -167,9 +168,91 @@ def affichepiece2(piece, x, y):
                 fenetre.blit(lbloc[piece[l][c] - 1], ((x + c) * 30, (y + l) * 30))
 
 
+""" Modifications """
+continuer = 2
+homescreen = image.load('Homescreen.png')
+screenmenu = image.load('Screenmenu.png')
+screenmusic = image.load('Screenmusic.png')
+startscreen0 = image.load('0.png')
+startscreen1 = image.load('1.png')
+startscreen2 = image.load('2.png')
+startscreen3 = image.load('3.png')
+pausescreen = image.load('Pausescreen.png')
+
+# Music is on by default
+music = True
+
+while continuer == 2:
+    time.Clock().tick(15)
+    for evenements in event.get():
+        if evenements.type == QUIT:
+            continuer = 0
+    keyb = key.get_pressed()
+    if keyb[K_e]:
+        continuer = 1
+    if keyb[K_o]:
+        menu = True
+        musiccomp = 0
+        while menu:
+            time.Clock().tick(10)
+            for evenements in event.get():
+                if evenements.type == QUIT:
+                    continuer = 0
+                    menu = False
+            keyb = key.get_pressed()
+
+            if keyb[K_m]:
+                musiccomp += 1
+                if musiccomp % 2 == 0:
+                    music = True
+                else:
+                    music = False
+
+            if keyb[K_RETURN]:
+                menu = False
+
+            if not music:
+                fenetre.blit(screenmusic, (0, 0))
+            else:
+                fenetre.blit(screenmenu, (0, 0))
+
+            display.flip()
+
+    fenetre.blit(homescreen, (0, 0))
+    display.flip()
+
+#if music:
+#    # Load music
+#    mixer.music.load('Tetris.mp3')
+#    # Loop music
+#    mixer.music.play(-1)
+
+
+fenetre.blit(startscreen3, (0,0))
+fenetre.blit(scoreboard, (300, 0))
+display.flip()
+time.wait(1000)
+
+fenetre.blit(startscreen2, (0,0))
+fenetre.blit(scoreboard, (300, 0))
+display.flip()
+time.wait(1000)
+
+fenetre.blit(startscreen1, (0,0))
+fenetre.blit(scoreboard, (300, 0))
+display.flip()
+time.wait(1000)
+
+fenetre.blit(startscreen0, (0,0))
+fenetre.blit(scoreboard, (300, 0))
+display.flip()
+
+''' END '''
+
+
 isactivepiece = 0 # Si cette variable est égale à 1, alors on appelle la fonction poser(bloc) pour générer un bloc aléatoire
                         # Si elle est égale à 0, on attend que le bloc soit posé pour la mettre à 1 et donc générer un nouveau bloc
-font = font.SysFont ("consolas", 30, bold=True, italic=False)
+font = font.SysFont("consolas", 30, bold=True, italic=False)
 piece_x = 0
 piece_y = 0
 comp = 0
@@ -187,11 +270,21 @@ high_scores=open("score.txt", "a+")
 totallines = 0
 # Génération du premier bloc
 nextbloc = choice([cyan, blue, orange, yellow, green, purple, red])
-
 continued = False
+
 """ MAIN CODE """
 
 while continuer == 1:
+
+    time.Clock().tick(10)
+
+    for evenements in event.get():
+        if evenements.type == QUIT:
+            continuer = 0
+
+
+
+
 
     if continued:
         showgrid()
@@ -203,12 +296,6 @@ while continuer == 1:
         affichepiece2(nextbloc, 11.3, 15)
         display.flip()
         continued = False
-
-
-    time.Clock().tick(10)
-    for evenements in event.get():
-        if evenements.type == QUIT:
-            continuer = 0
 
     if isactivepiece == 0:
         time.wait(500)
@@ -224,6 +311,54 @@ while continuer == 1:
         isactivepiece = 1
 
     keyb = key.get_pressed()
+
+# ''' MODIFICATIONS 2 '''
+
+    if keyb[K_p]:
+        pause = True
+        while pause:
+            time.Clock().tick(7)
+            for evenements in event.get():
+                if evenements.type == QUIT:
+                    continuer = 0
+                    pause = False
+            keyb = key.get_pressed()
+
+            if keyb[K_p]:
+                pause = False
+
+            if keyb[K_o]:
+                menu = True
+                musiccomp = 0
+                while menu:
+                    time.Clock().tick(10)
+                    for evenements in event.get():
+                        if evenements.type == QUIT:
+                            continuer = 0
+                            menu = False
+                    keyb = key.get_pressed()
+
+                    if keyb[K_m]:
+                        musiccomp += 1
+                        if musiccomp % 2 == 0:
+                            music = True
+                        else:
+                            music = False
+
+                    if keyb[K_RETURN]:
+                        menu = False
+
+                    if not music:
+                        fenetre.blit(screenmusic, (0, 0))
+                    else:
+                        fenetre.blit(screenmenu, (0, 0))
+
+                    display.flip()
+
+            fenetre.blit(pausescreen, (0, 0))
+            display.flip()
+
+# ''' END 2 '''
 
     if keyb[K_RIGHT]:
         piece_x += 1
