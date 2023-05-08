@@ -223,7 +223,7 @@ while continuer == 2:
 
 if music:
     # Load music
-    mixer.music.load('Tetris.mp3')
+    mixer.music.load('Korobeiniki.mp3')
     # Loop music
     mixer.music.play(-1)
 
@@ -280,10 +280,6 @@ while continuer == 1:
     for evenements in event.get():
         if evenements.type == QUIT:
             continuer = 0
-
-
-
-
 
     if continued:
         showgrid()
