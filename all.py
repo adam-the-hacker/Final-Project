@@ -168,7 +168,7 @@ def affichepiece2(piece, x, y):
                 fenetre.blit(lbloc[piece[l][c] - 1], ((x + c) * 30, (y + l) * 30))
 
 
-""" Modifications """
+
 continuer = 2
 homescreen = image.load('Homescreen.png')
 screenmenu = image.load('Screenmenu.png')
@@ -221,11 +221,11 @@ while continuer == 2:
     fenetre.blit(homescreen, (0, 0))
     display.flip()
 
-#if music:
-#    # Load music
-#    mixer.music.load('Tetris.mp3')
-#    # Loop music
-#    mixer.music.play(-1)
+if music:
+    # Load music
+    mixer.music.load('Tetris.mp3')
+    # Loop music
+    mixer.music.play(-1)
 
 
 fenetre.blit(startscreen3, (0,0))
@@ -247,7 +247,7 @@ fenetre.blit(startscreen0, (0,0))
 fenetre.blit(scoreboard, (300, 0))
 display.flip()
 
-''' END '''
+
 
 
 isactivepiece = 0 # Si cette variable est égale à 1, alors on appelle la fonction poser(bloc) pour générer un bloc aléatoire
@@ -256,7 +256,6 @@ font = font.SysFont("consolas", 30, bold=True, italic=False)
 piece_x = 0
 piece_y = 0
 comp = 0
-continuer = 1
 vspeed = 10         # Vertical speed, On le réduira pour augmenter la difficulté
 
 # changer la formule du level
@@ -312,7 +311,7 @@ while continuer == 1:
 
     keyb = key.get_pressed()
 
-# ''' MODIFICATIONS 2 '''
+
 
     if keyb[K_p]:
         pause = True
@@ -358,7 +357,7 @@ while continuer == 1:
             fenetre.blit(pausescreen, (0, 0))
             display.flip()
 
-# ''' END 2 '''
+
 
     if keyb[K_RIGHT]:
         piece_x += 1
