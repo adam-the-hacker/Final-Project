@@ -1,45 +1,40 @@
 import random
 import time
 import time as t
-from pygame import*
-from math import*
-from random import*
+from pygame import *
+from math import *
+from random import *
 
+cyan = [[0, 0, 0, 0],
+        [1, 1, 1, 1],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]]
 
-cyan=[[0,0,0,0],
-    [1,1,1,1],
-      [0,0,0,0],
-      [0,0,0,0]]
+blue = [[2, 0, 0],
+        [2, 2, 2],
+        [0, 0, 0]]
 
-blue=[[2,0,0],
-     [2,2,2],
-     [0,0,0]]
+orange = [[0, 0, 3],
+          [3, 3, 3],
+          [0, 0, 0]]
 
-orange=[[0,0,3],
-        [3,3,3],
-        [0,0,0]]
+yellow = [[4, 4],
+          [4, 4]]
 
-yellow=[[4,4],
-        [4,4]]
+green = [[0, 5, 5],
+         [5, 5, 0],
+         [0, 0, 0]]
 
-green=[[0,5,5],
-       [5,5,0],
-       [0,0,0]]
+purple = [[0, 6, 0],
+          [6, 6, 6],
+          [0, 0, 0]]
 
-purple=[[0,6,0],
-        [6,6,6],
-        [0,0,0]]
-
-red=[[7,7,0],
-     [0,7,7],
-     [0,0,0]]
-
-
-
+red = [[7, 7, 0],
+       [0, 7, 7],
+       [0, 0, 0]]
 
 
 def rotate_piece(piece):
-
     piece2 = [[0 for x in range(len(piece))] for y in range(len(piece[0]))]
     for x in range(len(piece[0])):
         for y in range(len(piece)):
@@ -55,7 +50,7 @@ def poser(piece, x, y):
     for i in range(len(piece)):
         for j in range(len(piece[0])):
             if piece[i][j] != 0:
-                maingrid[i+y][j+x+1] = piece[i][j]
+                maingrid[i + y][j + x + 1] = piece[i][j]
 
 
 def collision(piece):
@@ -77,13 +72,13 @@ def collision_shadow(piece):
                     return True
     return False
 
+
 def destroyline():
     global score, level, completedlines, totallines
     completedlines = 0
     destroyed = False
 
-
-    for y in range(len(maingrid)-3):
+    for y in range(len(maingrid) - 3):
         if all(maingrid[y]):
             maingrid.pop(y)
             maingrid.insert(0, [9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8])
@@ -94,33 +89,30 @@ def destroyline():
     if destroyed:
         score += ((100 + 200 * (completedlines - 1)) * level)
 
+
 # Testé et fonctionnel
 def showgrid():
-  for y in range(len(maingrid)):
-    for x in range(len(maingrid[1])):
-        if maingrid[y][x] == 0:
-            fenetre.blit(blocblanc, ((x-1)*30,y*30)) # Le coef 30 existe car ce sont les dimensions d'un carré
-        if maingrid[y][x] == 1:
-            fenetre.blit(bloccyan, ((x - 1) * 30, y * 30))
-        if maingrid[y][x] == 2:
-            fenetre.blit(blocblue, ((x - 1) * 30, y * 30))
-        if maingrid[y][x] == 3:
-            fenetre.blit(blocorange, ((x - 1) * 30, y * 30))
-        if maingrid[y][x] == 4:
-            fenetre.blit(blocyellow, ((x - 1) * 30, y * 30))
-        if maingrid[y][x] == 5:
-            fenetre.blit(blocgreen, ((x - 1) * 30, y * 30))
-        if maingrid[y][x] == 6:
-            fenetre.blit(blocpurple, ((x - 1) * 30, y * 30))
-        if maingrid[y][x] == 7:
-            fenetre.blit(blocred, ((x - 1) * 30, y * 30))
-        if maingrid[y][x] == 8:
-            fenetre.blit(blocscore, ((x-1)*30,y*30))
-
-
-
-
-
+    for y in range(len(maingrid)):
+        for x in range(len(maingrid[1])):
+            if maingrid[y][x] == 0:
+                fenetre.blit(blocblanc,
+                             ((x - 1) * 30, y * 30))  # Le coef 30 existe car ce sont les dimensions d'un carré
+            if maingrid[y][x] == 1:
+                fenetre.blit(bloccyan, ((x - 1) * 30, y * 30))
+            if maingrid[y][x] == 2:
+                fenetre.blit(blocblue, ((x - 1) * 30, y * 30))
+            if maingrid[y][x] == 3:
+                fenetre.blit(blocorange, ((x - 1) * 30, y * 30))
+            if maingrid[y][x] == 4:
+                fenetre.blit(blocyellow, ((x - 1) * 30, y * 30))
+            if maingrid[y][x] == 5:
+                fenetre.blit(blocgreen, ((x - 1) * 30, y * 30))
+            if maingrid[y][x] == 6:
+                fenetre.blit(blocpurple, ((x - 1) * 30, y * 30))
+            if maingrid[y][x] == 7:
+                fenetre.blit(blocred, ((x - 1) * 30, y * 30))
+            if maingrid[y][x] == 8:
+                fenetre.blit(blocscore, ((x - 1) * 30, y * 30))
 
 
 maingrid = [[9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8],
@@ -159,9 +151,10 @@ blocred = image.load('Bloc red.PNG')
 blocscore = image.load('Bloc score.PNG')
 scoreboard = image.load('scoreboard.png')
 
-fenetre = display.set_mode((480,600), RESIZABLE)
+fenetre = display.set_mode((480, 600), RESIZABLE)
 
 lbloc = [bloccyan, blocblue, blocorange, blocyellow, blocgreen, blocpurple, blocred]
+
 
 def affichepiece(piece):
     global piece_x, piece_y
@@ -170,12 +163,12 @@ def affichepiece(piece):
             if piece[l][c] != 0:
                 fenetre.blit(lbloc[piece[l][c] - 1], ((piece_x + c) * 30, (piece_y + l) * 30))
 
+
 def affichepiece2(piece, x, y):
     for l in range(len(piece)):
         for c in range(len(piece)):
             if piece[l][c] != 0:
                 fenetre.blit(lbloc[piece[l][c] - 1], ((x + c) * 30, (y + l) * 30))
-
 
 
 continuer = 2
@@ -236,38 +229,34 @@ if music:
     # Loop music
     mixer.music.play(-1)
 
-
-fenetre.blit(startscreen3, (0,0))
+fenetre.blit(startscreen3, (0, 0))
 fenetre.blit(scoreboard, (300, 0))
 display.flip()
 time.wait(1000)
 
-fenetre.blit(startscreen2, (0,0))
+fenetre.blit(startscreen2, (0, 0))
 fenetre.blit(scoreboard, (300, 0))
 display.flip()
 time.wait(1000)
 
-fenetre.blit(startscreen1, (0,0))
+fenetre.blit(startscreen1, (0, 0))
 fenetre.blit(scoreboard, (300, 0))
 display.flip()
 time.wait(1000)
 
-fenetre.blit(startscreen0, (0,0))
+fenetre.blit(startscreen0, (0, 0))
 fenetre.blit(scoreboard, (300, 0))
 display.flip()
 
-
-
-
-isactivepiece = 0 # Si cette variable est égale à 1, alors on appelle la fonction poser(bloc) pour générer un bloc aléatoire
-                        # Si elle est égale à 0, on attend que le bloc soit posé pour la mettre à 1 et donc générer un nouveau bloc
+isactivepiece = 0  # Si cette variable est égale à 1, alors on appelle la fonction poser(bloc) pour générer un bloc aléatoire
+# Si elle est égale à 0, on attend que le bloc soit posé pour la mettre à 1 et donc générer un nouveau bloc
 font = font.SysFont("consolas", 30, bold=True, italic=False)
 piece_x = 0
 piece_y = 0
 shadow_piece_y = piece_y
 comp = 0
-drop=False
-vspeed = 10         # Vertical speed, On le réduira pour augmenter la difficulté
+drop = False
+vspeed = 10  # Vertical speed, On le réduira pour augmenter la difficulté
 
 # changer la formule du level
 level = vspeed // 10
@@ -276,16 +265,16 @@ rotated_bloc = 0
 piece0 = True
 activebloc = None
 score = 0
-high_scores=open("score.txt", "a+")
+high_scores = open("score.txt", "a+")
 totallines = 0
 # Génération du premier bloc
 nextbloc = choice([cyan, blue, orange, yellow, green, purple, red])
 continued = False
-clavier_actif=100
+clavier_actif = 100
 """ MAIN CODE """
 
 while continuer == 1:
-    clavier_actif+=1
+    clavier_actif += 1
     time.Clock().tick(100)
 
     for evenements in event.get():
@@ -302,7 +291,6 @@ while continuer == 1:
         affichepiece2(nextbloc, 11.3, 15)
         display.flip()
         continued = False
-        
 
     if isactivepiece == 0:
         time.wait(500)
@@ -314,12 +302,10 @@ while continuer == 1:
         piece_y = 0
         piece_x = 3
         if collision(activebloc):
-            break # stoppe le jeu et affche le score ect...
+            break  # stoppe le jeu et affche le score ect...
         isactivepiece = 1
 
     keyb = key.get_pressed()
-
-
 
     if keyb[K_p]:
         pause = True
@@ -365,36 +351,34 @@ while continuer == 1:
             fenetre.blit(pausescreen, (0, 0))
             display.flip()
 
-
-
-    if keyb[K_RIGHT] and clavier_actif>3:
-        clavier_actif=0
+    if keyb[K_RIGHT] and clavier_actif > 3:
+        clavier_actif = 0
         piece_x += 1
         if collision(activebloc):
             piece_x -= 1
 
-    if keyb[K_LEFT] and clavier_actif>3:
-        clavier_actif=0
+    if keyb[K_LEFT] and clavier_actif > 3:
+        clavier_actif = 0
         piece_x -= 1
         if collision(activebloc):
-            piece_x +=1
+            piece_x += 1
 
     if keyb[K_SPACE]:
-            if not drop:
-                drop=True
-                while not collision(activebloc):
-                    piece_y += 1
-                    score += 2
-                piece_y -= 1
-                score -= 1
-                poser(activebloc, piece_x, piece_y)
-                isactivepiece = 0
-                continued = True
-                continue
+        if not drop:
+            drop = True
+            while not collision(activebloc):
+                piece_y += 1
+                score += 2
+            piece_y -= 1
+            score -= 1
+            poser(activebloc, piece_x, piece_y)
+            isactivepiece = 0
+            continued = True
+            continue
     else:
         drop = False
 
-    if keyb[K_DOWN] and clavier_actif>3:
+    if keyb[K_DOWN] and clavier_actif > 3:
         clavier_actif = 0
         piece_y += 1
         score += 1
@@ -406,7 +390,7 @@ while continuer == 1:
             continued = True
             continue
 
-    if keyb[K_UP] and clavier_actif>7:
+    if keyb[K_UP] and clavier_actif > 7:
         clavier_actif = 0
         activebloc2 = activebloc
         activebloc2 = rotate_piece(activebloc2)
@@ -424,7 +408,6 @@ while continuer == 1:
             continued = True
             continue
 
-
     # Affichage
     showgrid()
     fenetre.blit(scoreboard, (300, 0))
@@ -432,7 +415,7 @@ while continuer == 1:
     destroyline()
     fenetre.blit(font.render(str(score), True, (0, 0, 0)), (350, 103))
     fenetre.blit(font.render(str(totallines), True, (0, 0, 0)), (375, 338))
-    affichepiece2(nextbloc, 11.5-(len(nextbloc)-3)/2, 15)
+    affichepiece2(nextbloc, 11.5 - (len(nextbloc) - 3) / 2, 15)
     shadow_piece = list(activebloc)
     while not collision_shadow(shadow_piece):
         shadow_piece_y += 1
@@ -441,7 +424,7 @@ while continuer == 1:
     display.flip()
     comp += 1
 # On met le score dans un doc
-high_scores.write(str(score)+"\n")
+high_scores.write(str(score) + "\n")
 high_scores.close()
 # Syntaxes :
 # Lire le fichier: open("score.txt","r")
