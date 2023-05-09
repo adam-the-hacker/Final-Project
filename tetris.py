@@ -423,13 +423,13 @@ while continuer == 1:
 
     ### COMMANDES CLAVIER
 
-    if keyb[K_RIGHT] and clavier_actif > 4:
+    if keyb[K_RIGHT] and clavier_actif > 5:
         clavier_actif = 0
         piece_x += 1
         if collision(activebloc):
             piece_x -= 1
 
-    if keyb[K_LEFT] and clavier_actif > 4:
+    if keyb[K_LEFT] and clavier_actif > 5:
         clavier_actif = 0
         piece_x -= 1
         if collision(activebloc):
