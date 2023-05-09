@@ -140,13 +140,14 @@ for x in range(len(stringlastscores)):
     stringlastscores[x] = stringlastscores[x].replace("\n", "")
 
 lastscores = sorted(stringlastscores, key=int, reverse=False)
-
-lastscore1 = font.render(lastscores[-1], True, (255, 255, 255))
-lastscore2 = font.render(lastscores[-2], True, (255, 255, 255))
-lastscore3 = font.render(lastscores[-3], True, (255, 255, 255))
-lastscore4 = font.render(lastscores[-4], True, (255, 255, 255))
-lastscore5 = font.render(lastscores[-5], True, (255, 255, 255))
-
+try:
+    lastscore1 = font.render(lastscores[-1], True, (255, 255, 255))
+    lastscore2 = font.render(lastscores[-2], True, (255, 255, 255))
+    lastscore3 = font.render(lastscores[-3], True, (255, 255, 255))
+    lastscore4 = font.render(lastscores[-4], True, (255, 255, 255))
+    lastscore5 = font.render(lastscores[-5], True, (255, 255, 255))
+except:
+    pass
 
 
 
@@ -279,11 +280,14 @@ while continuer == 2:
             display.flip()
 
     fenetre.blit(homescreen, (0, 0))
-    fenetre.blit(lastscore1, (240-10*len(lastscores[-1]), 370))
-    fenetre.blit(lastscore2, (240-10*len(lastscores[-2]), 400))
-    fenetre.blit(lastscore3, (240-10*len(lastscores[-3]), 430))
-    fenetre.blit(lastscore4, (240-10*len(lastscores[-4]), 460))
-    fenetre.blit(lastscore5, (240-10*len(lastscores[-5]), 490))
+    try:
+        fenetre.blit(lastscore1, (240-10*len(lastscores[-1]), 370))
+        fenetre.blit(lastscore2, (240-10*len(lastscores[-2]), 400))
+        fenetre.blit(lastscore3, (240-10*len(lastscores[-3]), 430))
+        fenetre.blit(lastscore4, (240-10*len(lastscores[-4]), 460))
+        fenetre.blit(lastscore5, (240-10*len(lastscores[-5]), 490))
+    except:
+        pass
     display.flip()
 
 if music:
@@ -405,11 +409,14 @@ while continuer == 1:
 
 
             fenetre.blit(pausescreen, (0, 0))
-            fenetre.blit(lastscore1, (240 - 10 * len(lastscores[-1]), 370))
-            fenetre.blit(lastscore2, (240 - 10 * len(lastscores[-2]), 400))
-            fenetre.blit(lastscore3, (240 - 10 * len(lastscores[-3]), 430))
-            fenetre.blit(lastscore4, (240 - 10 * len(lastscores[-4]), 460))
-            fenetre.blit(lastscore5, (240 - 10 * len(lastscores[-5]), 490))
+            try:
+                fenetre.blit(lastscore1, (240 - 10 * len(lastscores[-1]), 370))
+                fenetre.blit(lastscore2, (240 - 10 * len(lastscores[-2]), 400))
+                fenetre.blit(lastscore3, (240 - 10 * len(lastscores[-3]), 430))
+                fenetre.blit(lastscore4, (240 - 10 * len(lastscores[-4]), 460))
+                fenetre.blit(lastscore5, (240 - 10 * len(lastscores[-5]), 490))
+            except:
+                pass
             display.flip()
 
 
