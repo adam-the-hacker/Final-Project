@@ -583,7 +583,6 @@ while True and continuer != 0:
             stringlastscores[x] = stringlastscores[x].replace("\n", "")
 
         lastscores = sorted(stringlastscores, key=int, reverse=False)
-        print(lastscores)
         try:
             lastscore1 = font.render(lastscores[-1], True, (255, 255, 255))
             lastscore2 = font.render(lastscores[-2], True, (255, 255, 255))
