@@ -1,3 +1,4 @@
+import os
 import random
 import time as t
 from pygame import*
@@ -229,7 +230,6 @@ while True and continuer != 0:
                 if maingrid[y][x] == 8:
                     fenetre.blit(blocscore, ((x - 1) * 30, y * 30))
 
-
     def affichepiece(piece):
         global piece_x, piece_y
         for l in range(len(piece)):
@@ -273,6 +273,15 @@ while True and continuer != 0:
                         music = True
                     else:
                         music = False
+
+                if keyb[K_f]:
+                    with open("score.txt", "r") as fichier:
+                        data = fichier.readlines()
+                    with open("score.txt", "w") as fichier:
+                        for line in data:
+                            fichier.write('')
+                    lastscores = []
+                    menu = False
 
                 if keyb[K_RETURN]:
                     menu = False
@@ -402,6 +411,15 @@ while True and continuer != 0:
                             else:
                                 music = False
                                 mixer.music.pause()
+
+                        if keyb[K_f]:
+                            with open("score.txt", "r") as fichier:
+                                data = fichier.readlines()
+                            with open("score.txt", "w") as fichier:
+                                for line in data:
+                                    fichier.write('')
+                            lastscores = []
+                            menu = False
 
                         if keyb[K_RETURN]:
                             menu = False
@@ -551,6 +569,29 @@ while True and continuer != 0:
             fenetre.blit(gameover1, (0, 0))
         else:
             fenetre.blit(gameover2, (0, 0))
+
+        high_scores = open("score.txt", "a+")
+        file = open("score.txt", "r")
+        totallines = 0
+        stringlastscores = []
+
+        for x in file:
+            if x != "\n" and x != 0 and x != "0\n":
+                stringlastscores.append(x)
+
+        for x in range(len(stringlastscores)):
+            stringlastscores[x] = stringlastscores[x].replace("\n", "")
+
+        lastscores = sorted(stringlastscores, key=int, reverse=False)
+        print(lastscores)
+        try:
+            lastscore1 = font.render(lastscores[-1], True, (255, 255, 255))
+            lastscore2 = font.render(lastscores[-2], True, (255, 255, 255))
+            lastscore3 = font.render(lastscores[-3], True, (255, 255, 255))
+            lastscore4 = font.render(lastscores[-4], True, (255, 255, 255))
+            lastscore5 = font.render(lastscores[-5], True, (255, 255, 255))
+        except:
+            pass
 
         try:
             fenetre.blit(lastscore1, (240 - 10 * len(lastscores[-1]), 370))
