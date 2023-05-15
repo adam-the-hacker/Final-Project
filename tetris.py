@@ -1,12 +1,13 @@
 import os
 import random
 import time as t
-from pygame import*
-from math import*
-from random import*
+from pygame import *
+from math import *
+from random import *
 
 continuer = 1
 init()
+mixer.init()
 font = font.SysFont("consolas", 30, bold=True, italic=False)
 
 while True and continuer != 0:
@@ -96,13 +97,11 @@ while True and continuer != 0:
 
     music = True  # Music is on by default
 
-
     ### RELATIF À LA PARTIE
 
     continuer = 2
     continued = False
     isactivepiece = 0
-
 
     ### RELATIF AUX PIÈCES
 
@@ -154,6 +153,7 @@ while True and continuer != 0:
 
     def rotate_piece(piece):
         piece2 = [[0 for x in range(len(piece))] for y in range(len(piece[0]))]
+        mixer.Sound.play(mixer.Sound('Rotate.wav'))
         for x in range(len(piece[0])):
             for y in range(len(piece)):
                 piece2[x][y] = piece[len(piece) - y - 1][x]
@@ -164,6 +164,7 @@ while True and continuer != 0:
     def poser(piece, x, y):
         global piece_x, piece_y
         piece_x, piece_y = x, y
+        mixer.Sound.play(mixer.Sound('Landing.wav'))
         for i in range(len(piece)):
             for j in range(len(piece[0])):
                 if piece[i][j] != 0:
@@ -205,6 +206,7 @@ while True and continuer != 0:
 
         if destroyed:
             score += ((100 + 200 * (completedlines - 1)) * level)
+            mixer.Sound.play(mixer.Sound('Yay.wav'))
 
 
     def showgrid():
@@ -230,6 +232,7 @@ while True and continuer != 0:
                 if maingrid[y][x] == 8:
                     fenetre.blit(blocscore, ((x - 1) * 30, y * 30))
 
+
     def affichepiece(piece):
         global piece_x, piece_y
         for l in range(len(piece)):
@@ -245,8 +248,12 @@ while True and continuer != 0:
                     fenetre.blit(lbloc[piece[l][c] - 1], ((x + c) * 30, (y + l) * 30))
 
 
-
     """"""""""""""""""""""""""" STARTING SCREENS """""""""""""""""""""""""""
+
+    if music:
+        mixer.music.load('HomeScreen.mp3')
+        mixer.music.play(-1)
+
     while continuer == 2:
         time.Clock().tick(15)
         for evenements in event.get():
@@ -271,8 +278,11 @@ while True and continuer != 0:
                     musiccomp += 1
                     if musiccomp % 2 == 0:
                         music = True
+                        mixer.music.unpause()
+
                     else:
                         music = False
+                        mixer.music.pause()
 
                 if keyb[K_f]:
                     with open("score.txt", "r") as fichier:
@@ -305,10 +315,14 @@ while True and continuer != 0:
         display.flip()
 
     if music:
+        # Stop homescreen music
+        mixer.music.stop()
         # Load music
         mixer.music.load('Korobeiniki.mp3')
         # Loop music
         mixer.music.play(-1)
+
+    mixer.Sound.play(mixer.Sound('GameStart.wav'))
 
     fenetre.blit(startscreen3, (0, 0))
     fenetre.blit(scoreboard, (300, 0))
@@ -328,7 +342,6 @@ while True and continuer != 0:
     fenetre.blit(startscreen0, (0, 0))
     fenetre.blit(scoreboard, (300, 0))
     display.flip()
-
 
     """"""""""""""""""""""""""" MAIN CODE """""""""""""""""""""""""""
 
@@ -375,6 +388,7 @@ while True and continuer != 0:
         if keyb[K_p] and clavier_actif > 20:
 
             pause = True
+            mixer.Sound.play(mixer.Sound('Pause.wav'))
             while pause:
                 time.Clock().tick(10)
                 for evenements in event.get():
@@ -386,6 +400,7 @@ while True and continuer != 0:
                 if keyb[K_p] and clavier_actif > 20:
                     clavier_actif = 0
                     pause = False
+                    mixer.Sound.play(mixer.Sound('Pause.wav'))
 
                 if keyb[K_o]:
                     menu = True
@@ -401,13 +416,13 @@ while True and continuer != 0:
                         if keyb[K_m]:
                             if music == False and musiccomp == 0:
                                 music = True
-                                mixer.music.load('Korobeiniki.mp3')
-                                mixer.music.play(-1)
+                                mixer.music.unpause()
                                 continue
                             musiccomp += 1
                             if musiccomp % 2 == 0:
                                 music = True
-                                mixer.music.unpause()
+                                mixer.music.load('Korobeiniki.mp3')
+                                mixer.music.play(-1)
                             else:
                                 music = False
                                 mixer.music.pause()
@@ -423,14 +438,15 @@ while True and continuer != 0:
 
                         if keyb[K_RETURN]:
                             menu = False
+                            mixer.Sound.play(mixer.Sound('Select.wav'))
 
                         if not music:
                             fenetre.blit(screenmusic, (0, 0))
+                            mixer.music.pause()
                         else:
                             fenetre.blit(screenmenu, (0, 0))
 
                         display.flip()
-
 
                 fenetre.blit(pausescreen, (0, 0))
                 try:
@@ -443,36 +459,37 @@ while True and continuer != 0:
                     pass
                 display.flip()
 
-
-
         ### COMMANDES CLAVIER
 
         if keyb[K_RIGHT] and clavier_actif > 5:
             clavier_actif = 0
             piece_x += 1
+            mixer.Sound.play(mixer.Sound('Move.wav'))
             if collision(activebloc):
                 piece_x -= 1
 
         if keyb[K_LEFT] and clavier_actif > 5:
             clavier_actif = 0
             piece_x -= 1
+            mixer.Sound.play(mixer.Sound('Move.wav'))
             if collision(activebloc):
-                piece_x +=1
+                piece_x += 1
 
         ### HARD DROP
 
         if keyb[K_SPACE]:
-                if not drop:
-                    drop = True
-                    while not collision(activebloc):
-                        piece_y += 1
-                        score += 2
-                    piece_y -= 1
-                    score -= 1
-                    poser(activebloc, piece_x, piece_y)
-                    isactivepiece = 0
-                    continued = True
-                    continue
+            if not drop:
+                drop = True
+                while not collision(activebloc):
+                    piece_y += 1
+                    score += 2
+                piece_y -= 1
+                score -= 1
+                poser(activebloc, piece_x, piece_y)
+                mixer.Sound.play(mixer.Sound('HardDrop.wav'))
+                isactivepiece = 0
+                continued = True
+                continue
         else:
             drop = False
 
@@ -480,6 +497,7 @@ while True and continuer != 0:
             clavier_actif = 0
             piece_y += 1
             score += 1
+            mixer.Sound.play(mixer.Sound('Move.wav'))
             if collision(activebloc):
                 piece_y -= 1
                 score -= 1
@@ -512,7 +530,6 @@ while True and continuer != 0:
             vspeed -= 3
             level += 1
 
-
         ### AFFICHAGE
 
         showgrid()
@@ -541,20 +558,19 @@ while True and continuer != 0:
         comp += 1
         clavier_actif += 1
 
-
     ### SCORE
 
-    high_scores.write(str(score)+"\n")
+    high_scores.write(str(score) + "\n")
     high_scores.close()
     # Syntaxes :
     # Lire le fichier: open("score.txt","r")
-
 
     """"""""""""""""""""""""""" GAME OVER """""""""""""""""""""""""""
 
     while continuer == 3:
 
         time.Clock().tick(15)
+        mixer.Sound.play(mixer.Sound('KO.wav'))
         for evenements in event.get():
             if evenements.type == QUIT:
                 continuer = 0
