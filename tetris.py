@@ -93,6 +93,18 @@ while True and continuer != 0:
     pausescreen = image.load('Pausescreen.png')
     gameover1 = image.load('Gameover1.png')
     gameover2 = image.load('Gameover2.png')
+
+
+    shadowcyan = image.load('shadowcyan.PNG')
+    shadowblue = image.load('shadowblue.PNG')
+    shadoworange = image.load('shadoworange.PNG')
+    shadowyellow = image.load('shadowyellow.PNG')
+    shadowgreen = image.load('shadowgreen.PNG')
+    shadowpurple = image.load('shadowpurple.PNG')
+    shadowred = image.load('shadowred.PNG')
+
+
+
     fenetre = display.set_mode((480, 600), RESIZABLE)
 
     music = True  # Music is on by default
@@ -110,6 +122,7 @@ while True and continuer != 0:
     shadow_piece_y = piece_y
     nextbloc = choice([cyan, blue, orange, yellow, green, purple, red])
     lbloc = [bloccyan, blocblue, blocorange, blocyellow, blocgreen, blocpurple, blocred]
+    lblocshadow = [shadowcyan, shadowblue, shadoworange, shadowyellow, shadowgreen, shadowpurple, shadowred]
     activebloc = None
     piece0 = True
     rotated_bloc = 0
@@ -122,6 +135,7 @@ while True and continuer != 0:
     level = 1  # Changer la formule du level
     clavier_actif = 100
     temps = t.time()
+    randomvariable = 0
 
     ### RELATIF AU SCORE
 
@@ -246,6 +260,12 @@ while True and continuer != 0:
             for c in range(len(piece)):
                 if piece[l][c] != 0:
                     fenetre.blit(lbloc[piece[l][c] - 1], ((x + c) * 30, (y + l) * 30))
+
+    def affichepiece3(piece, x, y):
+        for l in range(len(piece)):
+            for c in range(len(piece)):
+                if piece[l][c] != 0:
+                    fenetre.blit(lblocshadow[piece[l][c] - 1], ((x + c) * 30, (y + l) * 30))
 
 
     """"""""""""""""""""""""""" STARTING SCREENS """""""""""""""""""""""""""
@@ -421,8 +441,7 @@ while True and continuer != 0:
                             musiccomp += 1
                             if musiccomp % 2 == 0:
                                 music = True
-                                mixer.music.load('Korobeiniki.mp3')
-                                mixer.music.play(-1)
+                                mixer.music.unpause()
                             else:
                                 music = False
                                 mixer.music.pause()
@@ -534,7 +553,6 @@ while True and continuer != 0:
 
         showgrid()
         fenetre.blit(scoreboard, (300, 0))
-        affichepiece(activebloc)
         destroyline()
 
         # Affichage du score, lignes, ect
@@ -553,7 +571,8 @@ while True and continuer != 0:
         while not collision_shadow(shadow_piece):
             shadow_piece_y += 1
         shadow_piece_y -= 1
-        affichepiece2(shadow_piece, piece_x, shadow_piece_y)
+        affichepiece3(shadow_piece, piece_x, shadow_piece_y)
+        affichepiece(activebloc)
         display.flip()
         comp += 1
         clavier_actif += 1
@@ -570,7 +589,11 @@ while True and continuer != 0:
     while continuer == 3:
 
         time.Clock().tick(15)
-        mixer.Sound.play(mixer.Sound('KO.wav'))
+
+        if randomvariable == 0:
+            mixer.Sound.play(mixer.Sound('KO.wav'))
+            randomvariable = 1
+
         for evenements in event.get():
             if evenements.type == QUIT:
                 continuer = 0
