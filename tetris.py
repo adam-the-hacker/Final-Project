@@ -1,8 +1,5 @@
-import os
-import random
 import time as t
 from pygame import *
-from math import *
 from random import *
 
 continuer = 1
@@ -144,23 +141,37 @@ while True and continuer != 0:
     file = open("score.txt", "r")
     totallines = 0
     stringlastscores = []
+    nameslist = []
 
     for x in file:
+        line = x.split(" ")
         if x != "\n" and x != 0 and x != "0\n":
-            stringlastscores.append(x)
+            line[0] = line[0].replace("\n", "")
+            stringlastscores.append(line[0])
+            try:
+                line[1] = line[1].replace("\n", "")
+                nameslist.append(line[1])
+            except:
+                nameslist.append("")
 
     for x in range(len(stringlastscores)):
         stringlastscores[x] = stringlastscores[x].replace("\n", "")
 
-    lastscores = sorted(stringlastscores, key=int, reverse=False)
+    # Trie les scores et associe les noms correspondants
+    sorted_scores_with_names = sorted(zip(stringlastscores, nameslist), key=lambda x: int(x[0]), reverse=False)
+
+    # Sépare les scores triés et les noms dans deux listes distinctes
+    lastscores, nameslist = zip(*sorted_scores_with_names)
+
     try:
-        lastscore1 = font.render(lastscores[-1], True, (255, 255, 255))
-        lastscore2 = font.render(lastscores[-2], True, (255, 255, 255))
-        lastscore3 = font.render(lastscores[-3], True, (255, 255, 255))
-        lastscore4 = font.render(lastscores[-4], True, (255, 255, 255))
-        lastscore5 = font.render(lastscores[-5], True, (255, 255, 255))
+        lastscore1 = font.render(str(lastscores[-1] + " " + nameslist[-1]), True, (255, 255, 255))
+        lastscore2 = font.render(str(lastscores[-2] + " " + nameslist[-2]), True, (255, 255, 255))
+        lastscore3 = font.render(str(lastscores[-3] + " " + nameslist[-3]), True, (255, 255, 255))
+        lastscore4 = font.render(str(lastscores[-4] + " " + nameslist[-4]), True, (255, 255, 255))
+        lastscore5 = font.render(str(lastscores[-5] + " " + nameslist[-5]), True, (255, 255, 255))
     except:
         pass
+
 
     """"""""""""""""""""""""""" FONCTIONS """""""""""""""""""""""""""
 
@@ -325,11 +336,11 @@ while True and continuer != 0:
 
         fenetre.blit(homescreen, (0, 0))
         try:
-            fenetre.blit(lastscore1, (240 - 10 * len(lastscores[-1]), 370))
-            fenetre.blit(lastscore2, (240 - 10 * len(lastscores[-2]), 400))
-            fenetre.blit(lastscore3, (240 - 10 * len(lastscores[-3]), 430))
-            fenetre.blit(lastscore4, (240 - 10 * len(lastscores[-4]), 460))
-            fenetre.blit(lastscore5, (240 - 10 * len(lastscores[-5]), 490))
+            fenetre.blit(lastscore1, (240 - 10 * len(lastscores[-1]) - 10 * len(nameslist[-1]), 370))
+            fenetre.blit(lastscore2, (240 - 10 * len(lastscores[-2]) - 10 * len(nameslist[-2]), 400))
+            fenetre.blit(lastscore3, (240 - 10 * len(lastscores[-3]) - 10 * len(nameslist[-3]), 430))
+            fenetre.blit(lastscore4, (240 - 10 * len(lastscores[-4]) - 10 * len(nameslist[-4]), 460))
+            fenetre.blit(lastscore5, (240 - 10 * len(lastscores[-5]) - 10 * len(nameslist[-5]), 490))
         except:
             pass
         display.flip()
@@ -469,11 +480,11 @@ while True and continuer != 0:
 
                 fenetre.blit(pausescreen, (0, 0))
                 try:
-                    fenetre.blit(lastscore1, (240 - 10 * len(lastscores[-1]), 370))
-                    fenetre.blit(lastscore2, (240 - 10 * len(lastscores[-2]), 400))
-                    fenetre.blit(lastscore3, (240 - 10 * len(lastscores[-3]), 430))
-                    fenetre.blit(lastscore4, (240 - 10 * len(lastscores[-4]), 460))
-                    fenetre.blit(lastscore5, (240 - 10 * len(lastscores[-5]), 490))
+                    fenetre.blit(lastscore1, (240 - 10 * len(lastscores[-1]) - 10 * len(nameslist[-1]), 370))
+                    fenetre.blit(lastscore2, (240 - 10 * len(lastscores[-2]) - 10 * len(nameslist[-2]), 400))
+                    fenetre.blit(lastscore3, (240 - 10 * len(lastscores[-3]) - 10 * len(nameslist[-3]), 430))
+                    fenetre.blit(lastscore4, (240 - 10 * len(lastscores[-4]) - 10 * len(nameslist[-4]), 460))
+                    fenetre.blit(lastscore5, (240 - 10 * len(lastscores[-5]) - 10 * len(nameslist[-5]), 490))
                 except:
                     pass
                 display.flip()
@@ -614,32 +625,47 @@ while True and continuer != 0:
         totallines = 0
         stringlastscores = []
 
+        nameslist = []
+
         for x in file:
+            line = x.split(" ")
             if x != "\n" and x != 0 and x != "0\n":
-                stringlastscores.append(x)
+                line[0] = line[0].replace("\n", "")
+                stringlastscores.append(line[0])
+                try:
+                    line[1] = line[1].replace("\n", "")
+                    nameslist.append(line[1])
+                except:
+                    nameslist.append("")
 
         for x in range(len(stringlastscores)):
             stringlastscores[x] = stringlastscores[x].replace("\n", "")
 
-        lastscores = sorted(stringlastscores, key=int, reverse=False)
+        # Trie les scores et associe les noms correspondants
+        sorted_scores_with_names = sorted(zip(stringlastscores, nameslist), key=lambda x: int(x[0]), reverse=True)
+
+        # Sépare les scores triés et les noms dans deux listes distinctes
+        lastscores, nameslist = zip(*sorted_scores_with_names)
+
         try:
-            lastscore1 = font.render(lastscores[-1], True, (255, 255, 255))
-            lastscore2 = font.render(lastscores[-2], True, (255, 255, 255))
-            lastscore3 = font.render(lastscores[-3], True, (255, 255, 255))
-            lastscore4 = font.render(lastscores[-4], True, (255, 255, 255))
-            lastscore5 = font.render(lastscores[-5], True, (255, 255, 255))
+            lastscore1 = font.render(str(lastscores[-1] + " " + nameslist[-1]), True, (255, 255, 255))
+            lastscore2 = font.render(str(lastscores[-2] + " " + nameslist[-2]), True, (255, 255, 255))
+            lastscore3 = font.render(str(lastscores[-3] + " " + nameslist[-3]), True, (255, 255, 255))
+            lastscore4 = font.render(str(lastscores[-4] + " " + nameslist[-4]), True, (255, 255, 255))
+            lastscore5 = font.render(str(lastscores[-5] + " " + nameslist[-5]), True, (255, 255, 255))
         except:
             pass
 
         try:
-            fenetre.blit(lastscore1, (240 - 10 * len(lastscores[-1]), 370))
-            fenetre.blit(lastscore2, (240 - 10 * len(lastscores[-2]), 400))
-            fenetre.blit(lastscore3, (240 - 10 * len(lastscores[-3]), 430))
-            fenetre.blit(lastscore4, (240 - 10 * len(lastscores[-4]), 460))
-            fenetre.blit(lastscore5, (240 - 10 * len(lastscores[-5]), 490))
+            fenetre.blit(lastscore1, (240 - 10 * len(lastscores[-1]) - 10 * len(nameslist[-1]), 370))
+            fenetre.blit(lastscore2, (240 - 10 * len(lastscores[-2]) - 10 * len(nameslist[-2]), 400))
+            fenetre.blit(lastscore3, (240 - 10 * len(lastscores[-3]) - 10 * len(nameslist[-3]), 430))
+            fenetre.blit(lastscore4, (240 - 10 * len(lastscores[-4]) - 10 * len(nameslist[-4]), 460))
+            fenetre.blit(lastscore5, (240 - 10 * len(lastscores[-5]) - 10 * len(nameslist[-5]), 490))
         except:
             pass
 
         display.flip()
         time.wait(200)
         k += 1
+        
