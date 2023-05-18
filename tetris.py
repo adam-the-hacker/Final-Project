@@ -143,6 +143,11 @@ while True and continuer != 0:
     stringlastscores = []
     nameslist = []
 
+    # Nom du joueur
+    input_box = Rect(100, 100, 140, 32) # CHANGER LA POSITION 
+    username = ''
+    active = False
+
     for x in file:
         line = x.split(" ")
         if x != "\n" and x != 0 and x != "0\n":
@@ -590,8 +595,7 @@ while True and continuer != 0:
 
     ### SCORE
 
-    high_scores.write(str(score) + "\n")
-    high_scores.close()
+    high_scores.write(str(score) + " ")
     # Syntaxes :
     # Lire le fichier: open("score.txt","r")
 
@@ -609,6 +613,17 @@ while True and continuer != 0:
             if evenements.type == QUIT:
                 continuer = 0
                 break
+            active = True
+            if evenements.type == KEYDOWN:
+                if active:
+                    if evenements.key == K_RETURN:
+                        high_scores.write(str(username) + "\n")
+                        username = ''
+                    elif evenements.key == K_BACKSPACE:
+                        username = username[:-1]
+                    else:
+                        username += evenements.unicode
+
 
         keyb = key.get_pressed()
 
@@ -665,7 +680,11 @@ while True and continuer != 0:
         except:
             pass
 
+        color = Color('white') # CHANGER LA COULEUR DU TEXTE
+        txt_surface = font.render(username, True, color)
+        fenetre.blit(txt_surface, (input_box.x + 5, input_box.y + 5))
+        draw.rect(fenetre, color, input_box, 2)
+
         display.flip()
         time.wait(200)
         k += 1
-        
