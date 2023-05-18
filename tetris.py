@@ -90,7 +90,7 @@ while True and continuer != 0:
     pausescreen = image.load('Pausescreen.png')
     gameover1 = image.load('Gameover1.png')
     gameover2 = image.load('Gameover2.png')
-
+    namescreen = image.load('Username.png')
 
     shadowcyan = image.load('shadowcyan.PNG')
     shadowblue = image.load('shadowblue.PNG')
@@ -143,10 +143,10 @@ while True and continuer != 0:
     stringlastscores = []
     nameslist = []
 
-    # Nom du joueur
-    input_box = Rect(100, 100, 140, 32) # CHANGER LA POSITION 
+    ### Nom du joueur
+    input_box = Rect(173, 325, 123, 42) # CHANGER LA POSITION
     username = ''
-    active = False
+    active = True
 
     for x in file:
         line = x.split(" ")
@@ -166,7 +166,10 @@ while True and continuer != 0:
     sorted_scores_with_names = sorted(zip(stringlastscores, nameslist), key=lambda x: int(x[0]), reverse=False)
 
     # Sépare les scores triés et les noms dans deux listes distinctes
-    lastscores, nameslist = zip(*sorted_scores_with_names)
+    try:
+        lastscores, nameslist = zip(*sorted_scores_with_names)
+    except:
+        pass
 
     try:
         lastscore1 = font.render(str(lastscores[-1] + " " + nameslist[-1]), True, (255, 255, 255))
@@ -380,7 +383,6 @@ while True and continuer != 0:
     display.flip()
 
     """"""""""""""""""""""""""" MAIN CODE """""""""""""""""""""""""""
-
     while continuer == 1:
 
         time.Clock().tick(100)
@@ -414,7 +416,7 @@ while True and continuer != 0:
             piece_y = 0
             piece_x = 3
             if collision(activebloc):
-                continuer = 3
+                continuer = 4
             isactivepiece = 1
 
         keyb = key.get_pressed()
@@ -594,13 +596,44 @@ while True and continuer != 0:
         clavier_actif += 1
 
     ### SCORE
-
-    high_scores.write(str(score) + " ")
+    if score != 0:
+        high_scores.write(str(score) + " ")
     # Syntaxes :
     # Lire le fichier: open("score.txt","r")
 
-    """"""""""""""""""""""""""" GAME OVER """""""""""""""""""""""""""
+    """"""""""""""""""""""""""" PLAYER NAME """""""""""""""""""""""""""
 
+    while continuer == 4:
+
+        time.Clock().tick(15)
+
+        for evenements in event.get():
+            if evenements.type == QUIT:
+                continuer = 0
+                break
+            if evenements.type == KEYDOWN:
+                if active:
+                    if evenements.key == K_RETURN:
+                        high_scores.write(str(username) + "\n")
+                        username = ''
+                        continuer = 3
+                    elif evenements.key == K_BACKSPACE:
+                        username = username[:-1]
+                    else:
+                        if len(username) < 6:
+                            username += evenements.unicode
+
+        fenetre.blit(namescreen, (0, 0))
+        fenetre.blit(font.render(str(score), True, (255, 255, 255)), (240 - 10 * len(str(score)), 250))
+        color = Color('white')  # CHANGER LA COULEUR DU TEXTE
+        txt_surface = font.render(username, True, color)
+        fenetre.blit(txt_surface, (input_box.x + 5, input_box.y + 5))
+        draw.rect(fenetre, Color('black'), input_box, 2)
+
+        display.flip()
+
+    """"""""""""""""""""""""""" GAME OVER """""""""""""""""""""""""""
+    time.wait(300)
     while continuer == 3:
 
         time.Clock().tick(15)
@@ -613,16 +646,6 @@ while True and continuer != 0:
             if evenements.type == QUIT:
                 continuer = 0
                 break
-            active = True
-            if evenements.type == KEYDOWN:
-                if active:
-                    if evenements.key == K_RETURN:
-                        high_scores.write(str(username) + "\n")
-                        username = ''
-                    elif evenements.key == K_BACKSPACE:
-                        username = username[:-1]
-                    else:
-                        username += evenements.unicode
 
 
         keyb = key.get_pressed()
@@ -657,7 +680,7 @@ while True and continuer != 0:
             stringlastscores[x] = stringlastscores[x].replace("\n", "")
 
         # Trie les scores et associe les noms correspondants
-        sorted_scores_with_names = sorted(zip(stringlastscores, nameslist), key=lambda x: int(x[0]), reverse=True)
+        sorted_scores_with_names = sorted(zip(stringlastscores, nameslist), key=lambda x: int(x[0]), reverse=False)
 
         # Sépare les scores triés et les noms dans deux listes distinctes
         lastscores, nameslist = zip(*sorted_scores_with_names)
@@ -679,11 +702,6 @@ while True and continuer != 0:
             fenetre.blit(lastscore5, (240 - 10 * len(lastscores[-5]) - 10 * len(nameslist[-5]), 490))
         except:
             pass
-
-        color = Color('white') # CHANGER LA COULEUR DU TEXTE
-        txt_surface = font.render(username, True, color)
-        fenetre.blit(txt_surface, (input_box.x + 5, input_box.y + 5))
-        draw.rect(fenetre, color, input_box, 2)
 
         display.flip()
         time.wait(200)
