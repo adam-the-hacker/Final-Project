@@ -360,6 +360,7 @@ while True and continuer != 0:
             continuer = 1
         if keyb[K_o]:
             menu = True
+            # compte le nombre de fois que la touche m est appuyée
             musiccomp = 0
             while menu:
                 time.Clock().tick(10)
@@ -371,6 +372,7 @@ while True and continuer != 0:
 
                 if keyb[K_m]:
                     musiccomp += 1
+                    # permet de switcher entre l'arrêt et l'activation de la musique
                     if musiccomp % 2 == 0:
                         music = True
                         mixer.music.unpause()
