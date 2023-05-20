@@ -2,15 +2,20 @@ import time as t
 from pygame import *
 from random import *
 
+# Initialisation
 continuer = 1
 init()
 mixer.init()
+
+# Police par défaut sur le jeu
 font = font.SysFont("consolas", 30, bold=True, italic=False)
 
+# Boucle principale qui permet de jouer plusieurs fois sans relancer le programme python
 while True and continuer != 0:
     time.Clock().tick(10)
     init()
     """"""""""""""""""""""""""" PIECES """""""""""""""""""""""""""
+    # chaque pièce comporte son propre numéro
 
     cyan = [[0, 0, 0, 0],
             [1, 1, 1, 1],
@@ -41,6 +46,10 @@ while True and continuer != 0:
            [0, 0, 0]]
 
     """"""""""""""""""""""""""" VARIABLES """""""""""""""""""""""""""
+
+    # 9 : case fantôme, qui ne s'affiche pas
+    # 0 : case vierge (s'affiche noire)
+    # 8 : case fantôme, qui permet juste de laisser de l'espace pour le score et délimiter la zone de jeu
 
     maingrid = [[9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8],
                 [9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8],
@@ -90,8 +99,9 @@ while True and continuer != 0:
     pausescreen = image.load('Pausescreen.png')
     gameover1 = image.load('Gameover1.png')
     gameover2 = image.load('Gameover2.png')
-    namescreen = image.load('Username.png')
+    namescreen = image.load('yourscore.png')
 
+    # ombre des pièces
     shadowcyan = image.load('shadowcyan.PNG')
     shadowblue = image.load('shadowblue.PNG')
     shadoworange = image.load('shadoworange.PNG')
@@ -100,54 +110,98 @@ while True and continuer != 0:
     shadowpurple = image.load('shadowpurple.PNG')
     shadowred = image.load('shadowred.PNG')
 
-
-
+    # Fenêtre de 480 par 600
     fenetre = display.set_mode((480, 600), RESIZABLE)
 
-    music = True  # Music is on by default
+    music = True  # La musique est allumée par défaut
 
     ### RELATIF À LA PARTIE
 
+    # continuer = 1 : jeu principal
+    # continuer = 2 : start menu
+    # continuer = 3 : game over
+    # continuer = 4 : demander le nom du joueur
     continuer = 2
+
+    # Se met à True si on utilise la ligne "continue" du programme
     continued = False
+
+    # Se met à 1 si une pièce est active dans le jeu
     isactivepiece = 0
 
     ### RELATIF AUX PIÈCES
 
+    # Coordonnées de la pièce active
     piece_x = 0
     piece_y = 0
     shadow_piece_y = piece_y
+
+    # Choix du prochain bloc
     nextbloc = choice([cyan, blue, orange, yellow, green, purple, red])
+
+    # Liste de blocs
     lbloc = [bloccyan, blocblue, blocorange, blocyellow, blocgreen, blocpurple, blocred]
     lblocshadow = [shadowcyan, shadowblue, shadoworange, shadowyellow, shadowgreen, shadowpurple, shadowred]
+
+    # Stocke le bloc actif dans une variable
     activebloc = None
-    piece0 = True
-    rotated_bloc = 0
+
+    # Se met à True si on appuie sur le hard drop afin de bloquer la touche temporairement
     drop = False
 
     ### RELATIF AU FONCTIONNEMENT
+
+    # utilisé plus tard pour faire clignoter le "game over" à la fin de la partie
     k = 0
+
+    # utilisé comme compteur afin de compter les tours de boucle ect
     comp = 0
-    vspeed = 65  # Vertical speed, On le réduira pour augmenter la difficulté
-    level = 1  # Changer la formule du level
+
+    # Vertical speed, on le réduira pour augmenter la difficulté.
+    # Ce nombre est le nombre de tours de boucle nécessaire afin de descendre la pièce active
+    vspeed = 65
+
+    # niveau actuel
+    level = 1
+
+    # pour controler le clavier
     clavier_actif = 100
-    temps = t.time()
+
+    # utilisé afin de controller un bruitage a la fin du jeu. J'ai eu peu d'originalité
     randomvariable = 0
 
     ### RELATIF AU SCORE
 
+    # score
     score = 0
+
+    # ouvrir le fichier afin de le lire et de le modifier
     high_scores = open("score.txt", "a+")
+
+    # ouvrir le fichier afin de le lire seulement
     file = open("score.txt", "r")
+
+    # lignes détruites
     totallines = 0
+
+    # liste des scores précédents sous forme de chaine de caractères
     stringlastscores = []
+
+    # liste des noms enregistrés
     nameslist = []
 
     ### Nom du joueur
-    input_box = Rect(173, 325, 123, 42) # CHANGER LA POSITION
+
+    # zone de texte
+    input_box = Rect(173, 325, 123, 42)  # CHANGER LA POSITION
+
+    # nom du joueur (s'update en direct à chaque fois que le joueur écris une lettre de son nom)
     username = ''
+
+    # variable qui est utile lors de la gestion de la zone de texte
     active = True
 
+    # séparer le fichier en une liste de noms et de scores
     for x in file:
         line = x.split(" ")
         if x != "\n" and x != 0 and x != "0\n":
@@ -159,6 +213,7 @@ while True and continuer != 0:
             except:
                 nameslist.append("")
 
+    # remplacer tous les caractères indésirables par un caractère vide
     for x in range(len(stringlastscores)):
         stringlastscores[x] = stringlastscores[x].replace("\n", "")
 
@@ -171,6 +226,7 @@ while True and continuer != 0:
     except:
         pass
 
+    # enregistre les scores précédents (s'ils existent) sous forme de variables
     try:
         lastscore1 = font.render(str(lastscores[-1] + " " + nameslist[-1]), True, (255, 255, 255))
         lastscore2 = font.render(str(lastscores[-2] + " " + nameslist[-2]), True, (255, 255, 255))
@@ -179,7 +235,6 @@ while True and continuer != 0:
         lastscore5 = font.render(str(lastscores[-5] + " " + nameslist[-5]), True, (255, 255, 255))
     except:
         pass
-
 
     """"""""""""""""""""""""""" FONCTIONS """""""""""""""""""""""""""
 
@@ -279,6 +334,7 @@ while True and continuer != 0:
             for c in range(len(piece)):
                 if piece[l][c] != 0:
                     fenetre.blit(lbloc[piece[l][c] - 1], ((x + c) * 30, (y + l) * 30))
+
 
     def affichepiece3(piece, x, y):
         for l in range(len(piece)):
@@ -563,7 +619,7 @@ while True and continuer != 0:
                 continued = True
                 continue
 
-        if score > 5000 * level and vspeed > 1:
+        if score > 5000 * level and vspeed > 3:
             vspeed -= 3
             level += 1
 
@@ -646,7 +702,6 @@ while True and continuer != 0:
             if evenements.type == QUIT:
                 continuer = 0
                 break
-
 
         keyb = key.get_pressed()
 
